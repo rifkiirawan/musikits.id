@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('admin-login', [AdminController::class, 'showLogin'])->name('admin/login');
+Route::post('admin-login-process', [AdminController::class, 'Login'])->name('admin/login/process');
+Route::get('admin-logout', function(){
+    Session::flush();
+    return redirect('admin-login');
+  })->name('admin/logout');
