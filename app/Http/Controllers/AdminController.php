@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Session;
-use App\Admin;
+use App\Models\Admin;
 
 class AdminController extends Controller
 {
@@ -13,6 +13,14 @@ class AdminController extends Controller
     public function showLogin() {
 
         return view('admin.login');
+
+    }
+
+    public function showHome(Request $request) {
+
+        return view('admin.dashboard.home', [
+            'nama' => $request->session()->get('nama')
+        ]);
 
     }
 
@@ -33,26 +41,26 @@ class AdminController extends Controller
                 ]);
 
                 Session::flash('success', 'Anda berhasil Login');
-                return redirect('/dashboard');
+                return redirect('/admin/dashboard');
             }else{
                 // password salah
                 Session::flash('error', 'Salah Password');
-                return redirect('/admin/login');
+                return redirect('/admin-login');
             }
         }else{
             // admin tidak ditemukan
             Session::flash('error', 'User tidak dapat ditemukan');
-            return redirect('/admin/login');
+            return redirect('/admin-login');
         }
 
     }
 
     // menampilkan form register admin
-    public function showRegister() {
+    // public function showRegister() {
 
-        return view('dashboard.pages.admins.auth.supersecretregister');
+    //     return view('dashboard.pages.admins.auth.supersecretregister');
 
-    }
+    // }
 
     // mendaftarkan admin
     public function Register(Request $request) {

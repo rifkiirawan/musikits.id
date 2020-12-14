@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<title>UKM MUSIK ITS</title>
+<title>UKM Musik ITS</title>
 {{-- icon for title --}}
 {{--<link rel="icon" href="{{asset('img/sasrabahu_logo.png')}}" type="image/icon type">--}}
 <!-- Font Awesome -->
