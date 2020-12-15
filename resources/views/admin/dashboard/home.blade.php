@@ -24,7 +24,15 @@
 
     <!-- Main content -->
     <section class="content">
-
+    @if ($message = Session::get('sukses'))
+      <div class="alert alert-success">
+          {{$message}}
+      </div>
+    @elseif($message = Session::get('gagal'))
+      <div class="alert alert-danger">
+          {{$message}}
+      </div>
+    @endif
       <!-- Default box -->
       <div class="card">
         <div class="card-header">

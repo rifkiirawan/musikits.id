@@ -72,19 +72,21 @@ class AdminController extends Controller
 
     }
 
+
+
     // mendaftarkan admin
     public function Register(Request $request) {
         // dd($request->all());
         try {
             Admin::create([
-                'nama' => $request->input('name'),
+                'nama' => $request->input('nama'),
                 'email' => $request->input('email'),
-                'no_hp' => $request->input('mobile_no'),
+                'no_hp' => $request->input('no_hp'),
                 'password' => Hash::make($request->input('password')),
             ]);
 
             Session::flash('sukses', 'Admin berhasil didaftarkan');
-            return redirect('admin/dashboard');
+            return redirect('admin/register-admin');
 
         }catch(\Illuminate\Database\QueryException $e){
 
@@ -93,5 +95,15 @@ class AdminController extends Controller
                 return redirect('admin/dashboard/register-admin');
             }
         }
+    }
+
+    public function listAdmin(Request $request) {
+        $admins = Admin::paginate(10);
+        return view('admin.dashboard.admin.list-admin', [
+            'nama' => $request->session()->get('nama'),
+            'admins'  => $admins
+        ]);
+
+
     }
 }

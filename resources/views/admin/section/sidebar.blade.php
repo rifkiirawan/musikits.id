@@ -19,7 +19,7 @@
 
           {{-- Home --}}
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin/home')}}" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Beranda</p>
             </a>
@@ -45,7 +45,7 @@
                 </a>
               </li>
               <li class="nav-item ml-4">
-                <a href="#" class="nav-link">
+                <a href="{{route('admin/list')}}" class="nav-link">
                   @if (request()->path() == 'admin/dashboard/list-admin')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
@@ -55,14 +55,6 @@
                 </a>
               </li>
             </ul>
-          </li>
-
-          {{-- Kembali ke beranda --}}
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-arrow-left"></i>
-              <p>Kembali</p>
-            </a>
           </li>
 
         </ul>
