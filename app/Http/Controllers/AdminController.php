@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use App\Models\Admin;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 
 class AdminController extends Controller
 {
@@ -56,15 +63,18 @@ class AdminController extends Controller
     }
 
     // menampilkan form register admin
-    // public function showRegister() {
+    public function showRegister(Request $request) {
 
-    //     return view('dashboard.pages.admins.auth.supersecretregister');
+        return view('admin.dashboard.admin.register-admin', [
+            'nama' => $request->session()->get('nama')
+        ]);
 
-    // }
+
+    }
 
     // mendaftarkan admin
     public function Register(Request $request) {
-
+        // dd($request->all());
         try {
             Admin::create([
                 'nama' => $request->input('name'),
@@ -73,14 +83,14 @@ class AdminController extends Controller
                 'password' => Hash::make($request->input('password')),
             ]);
 
-            Session::flash('success', 'Admin berhasil didaftarkan');
-            return redirect('/admin/login');
+            Session::flash('sukses', 'Admin berhasil didaftarkan');
+            return redirect('admin/dashboard');
 
         }catch(\Illuminate\Database\QueryException $e){
 
             $errorCode = $e->errorInfo[1];
             if ($errorCode == 1062) {
-                return redirect('/admin/login');
+                return redirect('admin/dashboard/register-admin');
             }
         }
     }

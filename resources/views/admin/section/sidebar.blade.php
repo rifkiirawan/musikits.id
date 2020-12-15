@@ -27,31 +27,31 @@
           {{-- Home --}}
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-users-cog"></i>
               <p>
-                Apply
+                Admin
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item ml-4">
-                <a href="#" class="nav-link">
-                  @if (request()->path() == 'dashboard/list-current-apply')
+                <a href="{{route('admin/register')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/register-admin')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
                   @endif
-                  <p>Daftar apply semester ini</p>
+                  <p>Daftarkan admin</p>
                 </a>
               </li>
               <li class="nav-item ml-4">
                 <a href="#" class="nav-link">
-                  @if (request()->path() == 'dashboard/history-apply')
+                  @if (request()->path() == 'admin/dashboard/list-admin')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
                   @endif
-                  <p>Histori Apply</p>
+                  <p>List Admin</p>
                 </a>
               </li>
             </ul>
