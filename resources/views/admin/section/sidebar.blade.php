@@ -54,6 +54,16 @@
                   <p>List Admin</p>
                 </a>
               </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('admin/list')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/artikel')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Artikel</p>
+                </a>
+              </li>
             </ul>
           </li>
 

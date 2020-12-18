@@ -106,4 +106,14 @@ class AdminController extends Controller
 
 
     }
+
+    public function listArtikel(Request $request) {
+        $artikels = Artikel::paginate(10);
+        return view('admin.dashboard.admin.list-admin', [
+            'nama' => $request->session()->get('nama'),
+            'admins'  => $admins
+        ]);
+
+
+    }
 }

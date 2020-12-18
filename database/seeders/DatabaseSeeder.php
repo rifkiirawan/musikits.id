@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        \Database\Factories\CanvasViewFactory::new()->count(850)->create();
+        \Database\Factories\CanvasVisitFactory::new()->count(500)->create();
+
+        // $this->call([
+        //     AdminSeeder::class,
+            // PostSeeder::class,
+            // CommentSeeder::class,
+        // ]);
     }
 }
