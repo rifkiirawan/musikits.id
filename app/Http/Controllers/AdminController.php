@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use App\Models\Admin;
+use App\Models\Informasi;
 use Carbon\Carbon;
 use Exception;
+use Validator;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +26,10 @@ class AdminController extends Controller
     }
 
     public function showHome(Request $request) {
-
+        $allAdmin = Admin::all();
         return view('admin.dashboard.home', [
-            'nama' => $request->session()->get('nama')
+            'nama' => $request->session()->get('nama'),
+            'admin_total' => $allAdmin->count()
         ]);
 
     }
@@ -86,7 +89,7 @@ class AdminController extends Controller
             ]);
 
             Session::flash('sukses', 'Admin berhasil didaftarkan');
-            return redirect('admin/register-admin');
+            return redirect('admin/dashboard/list-admin');
 
         }catch(\Illuminate\Database\QueryException $e){
 
@@ -103,7 +106,60 @@ class AdminController extends Controller
             'nama' => $request->session()->get('nama'),
             'admins'  => $admins
         ]);
-
-
     }
+
+    public function showCreateInfo(Request $request) {
+        return view('admin.dashboard.informasi.create-info', [
+            'nama' => $request->session()->get('nama'),
+        ]);
+    }
+
+    public function createInfo(Request $request){
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'nama'         => 'required',
+            'deskripsi'    => 'required',
+            'tipe'         => 'required',
+            'gambar'       => 'required|mimes:png|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $berkas = $request->file('gambar');
+            $nama = $request->input('nama');
+            $ext = $berkas->getClientOriginalExtension();
+            $current = Carbon::now()->format('YmdHs');
+            $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
+            $tujuan = 'Data/Informasi';
+            DB::transaction(function() use ($request,$filename){
+                Informasi::create([
+                    'nama' => $request->input('nama'),
+                    'deskripsi' => $request->input('deskripsi'),
+                    'tipe' => $request->input('tipe'),
+                    'gambar' => $filename,
+                    'created_at' => Carbon::now()->toRfc2822String(),
+                    'updated_at' => Carbon::now()->toRfc2822String()
+                ]);
+            }, 5);
+            $berkas->move($tujuan, $filename);
+            Session::flash('sukses', 'Informasi berhasil ditambahkan');
+            return redirect('/admin/dashboard/list-admin');
+        } catch (Exception $e) {
+            Session::flash('gagal', 'Informasi tidak berhasil ditambahkan, '.$e->getMessage());
+            return redirect('/admin/dashboard/list-admin');
+        }
+    }
+
+    public function listInfo(Request $request) {
+        $infos = Informasi::paginate(10);
+        return view('admin.dashboard.informasi.list-info', [
+            'nama' => $request->session()->get('nama'),
+            'infos'  => $infos
+        ]);
+    }
+
 }
