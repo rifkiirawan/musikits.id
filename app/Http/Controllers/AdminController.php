@@ -203,17 +203,17 @@ class AdminController extends Controller
             }, 5);
             $berkas->move($tujuan, $filename);
             Session::flash('sukses', 'Alat dan Barang berhasil ditambahkan');
-            return redirect('/admin/dashboard/list-info');
+            return redirect('/admin/dashboard/list-stuff');
         } catch (Exception $e) {
             Session::flash('gagal', 'Alat dan Barang tidak berhasil ditambahkan, '.$e->getMessage());
-            return redirect('/admin/dashboard/list-info');
+            return redirect('/admin/dashboard/list-stuff');
         }
     }
 
     public function listStuff(Request $request)
     {
-        $infos = Informasi::paginate(10);
-        return view('admin.dashboard.informasi.list-stuff', [
+        $infos = AlatBarang::paginate(10);
+        return view('admin.dashboard.alatbarang.list-alat-barang', [
             'nama' => $request->session()->get('nama'),
             'infos'  => $infos
         ]);
