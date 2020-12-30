@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>TAMBAHKAN INFORMASI</h1>
+            <h1>TAMBAHKAN ALAT BARANG</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item">Informasi</li>
-              <li class="breadcrumb-item text-blue"><a href="{{ route('admin/create/info') }}">Tambahkan Informasi</a></li>
+              <li class="breadcrumb-item">Alat Barang</li>
+              <li class="breadcrumb-item text-blue"><a href="{{ route('admin/create/stuff') }}">Tambahkan Alat Barang</a></li>
             </ol>
           </div>
         </div>
@@ -45,18 +45,18 @@
           </div>
         </div>
         <div class="card-body">
-                <form role="form" action="{{ route('admin/create/info/process') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form role="form" action="{{ route('admin/create/stuff/process') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Judul</h6></label>
-                            <input class="form-control" type="text" name="nama" placeholder="Masukkan Judul Informasi" required autofocus>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Nama Barang</h6></label>
+                            <input class="form-control" type="text" name="nama" placeholder="Masukkan Nama Lengkap Barang" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Deskripsi Informasi</h6></label>
-                            <textarea type="text" name="deskripsi" class="form-control" id="summernote" placeholder="Masukkan Deskripsi Informasi"></textarea>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Harga Sewa</h6></label>
+                            <input class="form-control" type="text" name="harga" placeholder="Masukkan Harga Sewa" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,25 +69,25 @@
                                 </div>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="gambar" accept="image/png" id="gambar" aria-describedby="inputGroupFileAddon03">
-                                    <label class="custom-file-label"  id="idgambar" for="gambar">Upload Gambar</label>
+                                    <label class="custom-file-label"  id="idgambar" for="gambar">Upload Gambar Barang</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Tipe Informasi: </h6></label><br>
-                            <input class="form-control" type="text" id="tipe" name="tipe" value="{{ old('tipe') }}" placeholder="Masukkan Tipe Informasi" required autofocus readonly>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Status Barang: </h6></label><br>
+                            <input class="form-control" type="text" id="status" name="status" value="{{ old('status') }}" placeholder="Status Barang" required autofocus readonly>
                             <div class="dropdown">
-                              <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Tipe Informasi
+                              <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Pilih Status Barang
                                   <i class="fas fa-caret-down"></i>
                               </div>
                               <ul class="dropdown-menu univ_dropdown">
                                   <li class="dropdown-item">
-                                      <a onclick="semesterSetter('Artikel')">Artikel</a>
+                                      <a onclick="semesterSetter('Baik')">Baik</a>
                                   </li>
                                   <li class="dropdown-item">
-                                      <a onclick="semesterSetter('Kegiatan')">Kegiatan</a>
+                                      <a onclick="semesterSetter('Rusak')">Rusak</a>
                                   </li>
                               </ul>
                             </div>
@@ -115,7 +115,7 @@ $(document).ready(function(){
 	});
 });
 function semesterSetter(semester){
-  document.getElementById('tipe').value = semester;
+  document.getElementById('status').value = semester;
 }
 </script>
 @endsection

@@ -88,7 +88,37 @@
               </li>
             </ul>
           </li>
-
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-box"></i>
+              <p>
+                Alat Barang
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ml-4">
+                <a href="{{route('admin/create/stuff')}}" class="nav-link">
+                  @if (request()->path() == '/admin/dashboard/create-stuff')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Tambahkan Alat Barang</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('admin/list/stuff')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-stuff')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>List Alat Barang</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

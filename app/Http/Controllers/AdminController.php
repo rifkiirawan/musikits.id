@@ -147,10 +147,10 @@ class AdminController extends Controller
             }, 5);
             $berkas->move($tujuan, $filename);
             Session::flash('sukses', 'Informasi berhasil ditambahkan');
-            return redirect('/admin/dashboard/list-admin');
+            return redirect('/admin/dashboard/list-info');
         } catch (Exception $e) {
             Session::flash('gagal', 'Informasi tidak berhasil ditambahkan, '.$e->getMessage());
-            return redirect('/admin/dashboard/list-admin');
+            return redirect('/admin/dashboard/list-info');
         }
     }
 
@@ -162,4 +162,60 @@ class AdminController extends Controller
         ]);
     }
 
+    public function showCreateStuff(Request $request)
+    {
+        return view('admin.dashboard.alatbarang.create-alat-barang', [
+            'nama' => $request->session()->get('nama'),
+        ]);
+    }
+
+    public function createStuff(Request $request)
+    {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'nama'         => 'required',
+            'harga'        => 'required',
+            'status'       => 'required',
+            'gambar'       => 'required|mimes:png|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $berkas = $request->file('gambar');
+            $nama = $request->input('nama');
+            $ext = $berkas->getClientOriginalExtension();
+            $current = Carbon::now()->format('YmdHs');
+            $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
+            $tujuan = 'Data/AlatBarang';
+            DB::transaction(function() use ($request,$filename){
+                AlatBarang::create([
+                    'nama_alat' => $request->input('nama'),
+                    'harga_sewa' => $request->input('harga'),
+                    'status' => $request->input('status'),
+                    'gambar' => $filename,
+                    'created_at' => Carbon::now()->toRfc2822String(),
+                    'updated_at' => Carbon::now()->toRfc2822String()
+                ]);
+            }, 5);
+            $berkas->move($tujuan, $filename);
+            Session::flash('sukses', 'Alat dan Barang berhasil ditambahkan');
+            return redirect('/admin/dashboard/list-info');
+        } catch (Exception $e) {
+            Session::flash('gagal', 'Alat dan Barang tidak berhasil ditambahkan, '.$e->getMessage());
+            return redirect('/admin/dashboard/list-info');
+        }
+    }
+
+    public function listStuff(Request $request)
+    {
+        $infos = Informasi::paginate(10);
+        return view('admin.dashboard.informasi.list-stuff', [
+            'nama' => $request->session()->get('nama'),
+            'infos'  => $infos
+        ]);
+    }
 }

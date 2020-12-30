@@ -35,3 +35,7 @@ Route::get('/admin/dashboard/list-admin', [AdminController::class, 'listAdmin'])
 Route::get('/admin/dashboard/create-info', [AdminController::class, 'showCreateInfo'])->name('admin/create/info')->middleware('AdminCheck');
 Route::post('/admin/dashboard/create-info-process', [AdminController::class, 'createInfo'])->name('admin/create/info/process')->middleware('AdminCheck');
 Route::get('/admin/dashboard/list-info', [AdminController::class, 'listInfo'])->name('admin/list/info')->middleware('AdminCheck');
+
+Route::get('/admin/dashboard/create-stuff', [AdminController::class, 'showCreateStuff'])->name('admin/create/stuff')->middleware('AdminCheck');
+Route::post('/admin/dashboard/create-stuff-process', [AdminController::class, 'createStuff'])->name('admin/create/stuff/process')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])->name('admin/list/stuff')->middleware('AdminCheck');

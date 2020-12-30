@@ -25,8 +25,22 @@
     {{-- main content --}}
     <section class="content">
         <div class="card">
-            <div class="card-header">
+        <div class="card-header">
+          @if ($message = Session::get('sukses'))
+            <div class="alert alert-success">
+                {{$message}}
             </div>
+          @elseif($message = Session::get('gagal'))
+            <div class="alert alert-danger">
+                {{$message}}
+            </div>
+          @endif
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="table-responsive">
