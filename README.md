@@ -1,5 +1,24 @@
 # Final Project MPPL
 
+### Todo
+
+- [ ] Hyperlink di homepage (liat TODO)
+- [ ] Ambil artikel dari controller. Cari cara buat tampilin yang paling baru diatas
+
+### In Progress
+
+- [ ] Homepage
+  - [ ] Hyperlink di homepage (liat TODO)
+  - [ ] Ambil artikel dari controller. Cari cara buat tampilin yang paling baru diatas
+  - [x] Basic homepage
+ - [ ] Sewa Studio
+    - [x] Show Calendar
+    - [ ] Add booking di kalender
+
+### Done ✓
+
+
+---
 Steps:
 
 1. Clone
