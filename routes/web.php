@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,5 @@ Route::get('/admin/dashboard/list-info', [AdminController::class, 'listInfo'])->
 Route::get('/admin/dashboard/create-stuff', [AdminController::class, 'showCreateStuff'])->name('admin/create/stuff')->middleware('AdminCheck');
 Route::post('/admin/dashboard/create-stuff-process', [AdminController::class, 'createStuff'])->name('admin/create/stuff/process')->middleware('AdminCheck');
 Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])->name('admin/list/stuff')->middleware('AdminCheck');
+
+Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('calendar/sewa_studio');

@@ -68,7 +68,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item ml-4">
                 <a href="{{route('admin/create/info')}}" class="nav-link">
-                  @if (request()->path() == '/admin/dashboard/create-info')
+                  @if (request()->path() == 'admin/dashboard/create-info')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
@@ -99,7 +99,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item ml-4">
                 <a href="{{route('admin/create/stuff')}}" class="nav-link">
-                  @if (request()->path() == '/admin/dashboard/create-stuff')
+                  @if (request()->path() == 'admin/dashboard/create-stuff')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
