@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\AlatBarang;
 
 
 class AdminController extends Controller
@@ -74,8 +75,6 @@ class AdminController extends Controller
 
 
     }
-
-
 
     // mendaftarkan admin
     public function Register(Request $request) {
@@ -195,7 +194,7 @@ class AdminController extends Controller
                 AlatBarang::create([
                     'nama_alat' => $request->input('nama'),
                     'harga_sewa' => $request->input('harga'),
-                    'status' => $request->input('status'),
+                    'status_barang' => $request->input('status'),
                     'gambar' => $filename,
                     'created_at' => Carbon::now()->toRfc2822String(),
                     'updated_at' => Carbon::now()->toRfc2822String()
