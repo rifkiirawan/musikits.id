@@ -56,22 +56,22 @@ class PenggunaController extends Controller
                 }else
                 {
                     Session::flash('error', 'Password tidak cocok');
-                    return redirect()->route('pengguna/show-login');
+                    return redirect()->route('registerUmum');
                 }
             }
             else if($pengguna->status == 0)
             {
                 Session::flash('error', 'Akun anda belum divalidasi');
-                return redirect()->route('pengguna/show-login');
+                return redirect()->route('registerUmum');
             }
             else
             {
                 Session::flash('error', 'Akun tidak ditemukan');
-                return redirect()->route('pengguna/show-login');
+                return redirect()->route('registerUmum');
             }
         }
         Session::flash('error', 'Anda belum mempunyai akun, silahkan register terlebih dahulu');
-        return redirect()->route('pengguna/show-register');
+        return redirect()->route('registerUmum');
     }
 
     public function RegisterUmum(Request $request)
