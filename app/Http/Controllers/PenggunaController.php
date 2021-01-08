@@ -22,13 +22,16 @@ use App\Models\Pengguna;
 class PenggunaController extends Controller
 {
     public function showLoginForm(){
-        // return view('user.login');
+        return view('customAuth.login');
     }
 
-    public function showRegisterForm(){
-        // return view('user.register');
+    public function showRegisterFormUmum(){
+        return view('customAuth.register.umum');
     }
 
+    public function showRegisterFormAnggota(){
+        return view('customAuth.register.anggota');
+    }
 
     public function Login(Request $request)
     {

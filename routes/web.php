@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,15 +48,10 @@ Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
 
-Route::get('register-anggota', function () {
-    return view('customAuth.register.anggota');
-});
 
-Route::get('register-umum', function () {
-    return view('customAuth.register.umum');
-});
+// Route Register dan Login
+Route::get('/register-anggota', [PenggunaController::class, 'showRegisterFormAnggota'])->name('registerAnggota');
+Route::get('/register-umum', [PenggunaController::class, 'showRegisterFormUmum'])->name('registerUmum');
+Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
 
-Route::get('login-account', function () {
-    return view('customAuth.login');
-});
 
