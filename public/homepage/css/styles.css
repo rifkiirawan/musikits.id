@@ -10262,6 +10262,11 @@ body {
 }
 .projects-section .featured-text {
   padding: 2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 @media (min-width: 992px) {
   .projects-section .featured-text {
@@ -10273,6 +10278,18 @@ body {
   padding: 3rem;
   font-size: 90%;
 }
+
+@media (min-width: 992px) {
+    .projects-section .featured-text-button {
+      padding: 0 0 0 2.5rem;
+      /* border-left: 0.5rem solid #64a19d; */
+    }
+  }
+  .projects-section .project-text-button {
+    padding: 3rem;
+    font-size: 90%;
+  }
+
 @media (min-width: 992px) {
   .projects-section .project-text {
     padding: 5rem;
@@ -10348,4 +10365,19 @@ body {
 
 .footer {
   padding: 5rem 0;
+}
+
+/* .limitText{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+} */
+
+.frameImg{
+    height: 400px;
+    width: 1900px;
+    object-fit: cover;
+    overflow: hidden;
 }

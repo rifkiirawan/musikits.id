@@ -70,47 +70,62 @@
         <!-- Artikel-->
         <section class="projects-section bg-light" id="artikel">
             <div class="container">
-                <!-- Featured Project Row-->
+                <!-- Featured Artikel-->
                 <h1 class="text-center text-black mb-4">Artikel</h1>
-                <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="{{ asset('homepage/assets/img/bg-masthead.jpg') }}" alt="" /></div>
-                    <div class="col-xl-4 col-lg-5">
-                        <div class="featured-text text-center text-lg-left">
-                            <h4>Shoreline</h4>
-                            <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project One Row-->
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-                    <div class="col-lg-6"><img class="img-fluid" src="{{ asset('homepage/assets/img/demo-image-01.jpg') }}" alt="" /></div>
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">Misty</h4>
-                                    <p class="mb-0 text-white-50">An example of where you can put an image of a project, or anything else, along with a description.</p>
-                                    <hr class="d-none d-lg-block mb-0 ml-0" />
-                                </div>
+                @foreach ($top as $top)
+                    <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+                        <div class="col-xl-8 col-lg-7"><img class="frameImg img-fluid mb-3 mb-lg-0" src="{{ url('Data/Informasi/' . $top->gambar) }}" alt="" /></div>
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="featured-text text-center text-lg-left mb-4">
+                                <h4>{{ $top->nama }}}</h4>
+                                <p class="text-black-50 mb-0">{{ $top->deskripsi }}</p>
+                            </div>
+                            <div class="featured-text-button text-center text-lg-left">
+                                {{-- TODO: tambain href ke link artikel --}}
+                                <a href="" class="btn btn-primary">Lanjut Baca</a>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Project Two Row-->
-                <div class="row justify-content-center no-gutters">
-                    <div class="col-lg-6"><img class="img-fluid" src="{{ asset('homepage/assets/img/demo-image-02.jpg') }}" alt="" /></div>
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">Mountains</h4>
-                                    <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well, try this theme on a small screen!</p>
-                                    <hr class="d-none d-lg-block mb-0 mr-0" />
+                @endforeach
+
+                <!-- Project Artikel terbaru-->
+                @foreach ($artikels as $artikel)
+                    @if ($loop->first)
+                        <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                            <div class="col-lg-6"><img class="frameImg img-fluid" src="{{ url('Data/Informasi/' . $artikel->gambar) }}" alt="" /></div>
+                            <div class="col-lg-6">
+                                <div class="bg-black text-center h-100 project">
+                                    <div class="d-flex h-100">
+                                        <div class="project-text w-100 my-auto text-center text-lg-left">
+                                            <h4 class="text-white">{{ $artikel->nama }}</h4>
+                                            <p class="mb-0 text-white-50">{{ $artikel->deskripsi }}</p>
+                                            <hr class="d-none d-lg-block mb-4 ml-0" />
+                                            {{-- TODO: tambain href ke link artikel --}}
+                                            <a href="" class="btn btn-secondary">Lanjut Baca</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    @else
+                        <div class="row justify-content-center no-gutters">
+                            <div class="col-lg-6"><img class="frameImg img-fluid" src="{{ url('Data/Informasi/' . $artikel->gambar) }}" alt="" /></div>
+                            <div class="col-lg-6 order-lg-first">
+                                <div class="bg-black text-center h-100 project">
+                                    <div class="d-flex h-100">
+                                        <div class="project-text w-100 my-auto text-center text-lg-right">
+                                            <h4 class="text-white">{{ $artikel->nama }}</h4>
+                                            <p class="mb-0 text-white-50">{{ $artikel->deskripsi }}</p>
+                                            <hr class="d-none d-lg-block mb-4 mr-0" />
+                                            {{-- TODO: tambain href ke link artikel --}}
+                                            <a href="" class="btn btn-secondary">Lanjut Baca</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
         </section>
         <!-- Hubungi Kami-->
