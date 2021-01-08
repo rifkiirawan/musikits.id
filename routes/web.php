@@ -57,4 +57,8 @@ Route::post('/register-umum', [PenggunaController::class, 'RegisterUmum'])->name
 Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
 Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.login');
 
-
+Route::group(['middleware' => 'LoginCheck'], function () {
+    Route::get('dashboard', function () {
+        return view('dashboard.index');
+    });
+});

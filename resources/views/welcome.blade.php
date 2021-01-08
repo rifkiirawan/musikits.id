@@ -60,7 +60,7 @@
                         @if (Session::has('login'))
                             <p class="text-white-50">
                                 Silakan pilih menu <b>Studio</b> jika ingin menyewa studio, atau pilih menu <b>Alat Musik</b> apabila ingin menyewa
-                                <a href="{{ route("registerUmum") }}">daftar akun sekarang.</a>
+                                alat musik.
                             </p>
                         @else
                             <p class="text-white-50">
