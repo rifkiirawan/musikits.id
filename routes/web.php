@@ -46,3 +46,16 @@ Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])
 
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
+
+Route::get('register-anggota', function () {
+    return view('customAuth.register.anggota');
+});
+
+Route::get('register-umum', function () {
+    return view('customAuth.register.umum');
+});
+
+Route::get('login-account', function () {
+    return view('customAuth.login');
+});
+
