@@ -44,4 +44,5 @@ Route::get('/admin/dashboard/create-stuff', [AdminController::class, 'showCreate
 Route::post('/admin/dashboard/create-stuff-process', [AdminController::class, 'createStuff'])->name('admin/create/stuff/process')->middleware('AdminCheck');
 Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])->name('admin/list/stuff')->middleware('AdminCheck');
 
-Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('calendar/sewa_studio');
+Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
+Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
