@@ -1,67 +1,105 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel Fullcalender Add/Update/Delete Event Example Tutorial - NiceSnippets.com</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
-</head>
-<body>
-    <div class="container">
-        <div class="response alert alert-success mt-2" style="display: none;"></div>
-        <div id='calendar'></div>
-    </div>
-</body>
+<meta charset='utf-8' />
+<link href="{{ asset('fullcalendar/main.css') }}" rel='stylesheet' />
+<script src="{{ asset('fullcalendar/main.js') }}"></script>
 <script>
-$(document).ready(function () {
-        var SITEURL = "{{url('/')}}";
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        var calendar = $('#calendar').fullCalendar({
-            editable: true,
-            events: SITEURL + "/calendar",
-            displayEventTime: true,
-            editable: true,
-            eventRender: function (event, element, view) {
-                if (event.allDay === 'true') {
-                    event.allDay = true;
-                } else {
-                    event.allDay = false;
-                }
-            },
-            selectable: true,
-            selectHelper: true,
-            select: function (start, end, allDay) {
-                var title = prompt('Event Title:');
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
 
-                if (title) {
-                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-
-                    calendar.fullCalendar('renderEvent',
-                            {
-                                start: start,
-                                end: end,
-                                allDay: allDay
-                            },
-                    true
-                            );
-                }
-                calendar.fullCalendar('unselect');
-            },
-        });
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prevYear,prev,next,nextYear today',
+        center: 'title',
+        right: 'dayGridMonth,dayGridWeek,dayGridDay'
+      },
+      initialDate: '2020-09-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      dayMaxEvents: true, // allow "more" link when too many events
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2020-09-01'
+        },
+        {
+          title: 'Long Event',
+          start: '2020-09-07',
+          end: '2020-09-10'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2020-09-09T16:00:00'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2020-09-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2020-09-11',
+          end: '2020-09-13'
+        },
+        {
+          title: 'Meeting',
+          start: '2020-09-12T10:30:00',
+          end: '2020-09-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2020-09-12T12:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2020-09-12T14:30:00'
+        },
+        {
+          title: 'Happy Hour',
+          start: '2020-09-12T17:30:00'
+        },
+        {
+          title: 'Dinner',
+          start: '2020-09-12T20:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2020-09-13T07:00:00'
+        },
+        {
+          title: 'Click for Google',
+          url: 'http://google.com/',
+          start: '2020-09-28'
+        }
+      ]
     });
 
-    function displayMessage(message) {
-        $(".response").css('display','block');
-        $(".response").html(""+message+"");
-        setInterval(function() { $(".response").fadeOut(); }, 4000);
-    }
+    calendar.render();
+  });
+
 </script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+</body>
 </html>
