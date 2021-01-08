@@ -9,7 +9,7 @@ class Pengguna extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama_pengguna', 'alamat', 'no_telp', 'id_line','jenis_kelamin', 'role', 'status', 'id_admin'
+        'nama_pengguna', 'alamat', 'no_telp', 'id_line','nrp', 'role', 'status', 'id_admin', 'email', 'password'
     ];
     protected $table = 'pengguna';
 }

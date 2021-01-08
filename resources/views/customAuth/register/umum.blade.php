@@ -19,12 +19,34 @@
         <!-- Sign up form -->
         <section class="signup">
             <div class="container">
+            @if (Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            <strong>Success:</strong> {{ Session::get('success') }}
+        </div>
+        @elseif (Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ Session::get('error') }}
+        </div>
+        @endif
+
+        @if (count($errors) > 0)
+        <div class="alert alert-danger" role="alert">
+            <strong>Errors:</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
                 <div class="signup-content">
                     <div class="signup-form">
                         <h2 class="form-title">Daftar Umum</h2>
                         {{-- TODO: POST tergantung controller --}}
                         {{-- TOOD: Kasih value anggota --}}
-                        <form method="POST" class="register-form" id="register-form">
+                        <form method="POST" class="register-form" id="register-form" action="{{ route('post.registerUmum') }}">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
                             <div class="form-group">
                                 <label for="nama"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="nama" id="nama" placeholder="Nama Pengguna"/>
@@ -61,7 +83,7 @@
                     <div class="signup-image">
                         <figure><img src="{{ asset('auth/images/signup-image.jpg') }}" alt="sing up image"></figure>
                         {{-- TODO: Href ke login --}}
-                        <a href="#" class="signup-image-link">Saya telah terdaftar</a>
+                        <a href="/login-account" class="signup-image-link">Saya telah terdaftar</a>
                     </div>
                 </div>
             </div>

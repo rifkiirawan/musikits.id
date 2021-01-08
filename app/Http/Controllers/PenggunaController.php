@@ -74,34 +74,37 @@ class PenggunaController extends Controller
         return redirect()->route('pengguna/show-register');
     }
 
-    public function Register(Request $request)
+    public function RegisterUmum(Request $request)
     {
         // dd($request->input('email'));
         // dd($formatDate);
 
         $validator = Validator::make($request->all(), [
             'email'         => 'required|email|unique:pengguna',
-            'password'      => 'required|min:8',
-            'nama_pengguna' => 'required',
-            'role'          => 'required',
-            'jenis_kelamin' => 'required',
-            'no_telp'       => 'required|max:15',
-            'id_line'       => 'required|max:255',
+            'pass'          => 'required|min:8',
+            're_pass'       => 'required|min:8|same:pass',
+            'nama'          => 'required',
+            // 'role'          => 'required',
+            // 'jenis_kelamin' => 'required',
+            'notelp'        => 'required|max:15',
+            'idLine'        => 'required|max:255',
             'alamat'        => 'required|max:256',
         ],
         [
             'email.required' => 'Email harus diisi!',
             'email.unique' => 'Email harus menggunakan email yang belum pernah dipakai!',
-            'password.required' => 'Password harus diisi!',
-            'password.min' => 'Password minimal terdiri dari 8 karakter!',
-            'role.required' => 'Role harus diisi!',
-            'jenis_kelamin.required' => 'Jenis Kelamin harus diisi!',
+            'pass.required' => 'Password harus diisi!',
+            'pass.min' => 'Password minimal terdiri dari 8 karakter!',
+            're_pass.required' => 'Konfirmasi Password harus diisi!',
+            're_pass.same' => 'Konfirmasi password harus sama dengan password yang diisikan!',
+            // 'role.required' => 'Role harus diisi!',
+            // 'jenis_kelamin.required' => 'Jenis Kelamin harus diisi!',
             'alamat.required' => 'Alamat Mahasiswa harus diisi!',
-            'no_telp.required' => 'Nomor Handphone harus diisi!',
-            'no_telp.max' => 'Nomor Handphone maksimal panjangnya 15 karakter!',
-            'id_line.required' => 'ID Line harus diisi!',
-            'id_line.max' => 'ID Line maksimal panjangnya 255 karakter!',
-            'nama_pengguna.required' => 'Nama Pengguna harus diisi!',
+            'notelp.required' => 'Nomor Handphone harus diisi!',
+            'notelp.max' => 'Nomor Handphone maksimal panjangnya 15 karakter!',
+            'idLine.required' => 'ID Line harus diisi!',
+            'idLine.max' => 'ID Line maksimal panjangnya 255 karakter!',
+            'nama.required' => 'Nama Pengguna harus diisi!',
         ]);
 
 
@@ -109,32 +112,24 @@ class PenggunaController extends Controller
             // Session::flash('error', $validator->errors());
             return redirect()->back()->withErrors($validator->messages())->withInput();;
         }
-        if($request->input('role') == "anggota")
-        {
-            $role = "Anggota";
-        }
-        else
-        {
-            $role = "Non-Anggota";
-        }
         try {
 
-            DB::transaction(function() use ($request,$role) {
+            DB::transaction(function() use ($request) {
             Pengguna::create([
-                'nama_pengguna' => $request->input('nama_pengguna'),
+                'nama_pengguna' => $request->input('nama'),
                 'alamat'        => $request->input('alamat'),
-                'no_telp'       => $request->input('no_telp'),
-                'id_line'        => $request->input('id_line'),
+                'no_telp'       => $request->input('notelp'),
+                'id_line'       => $request->input('idLine'),
                 'email'         => $request->input('email'),
-                'password'      => Hash::make($request->input('password')),
-                'jenis_kelamin' => $request->input('jenis_kelamin'),
-                'role'          => $role,
+                'password'      => Hash::make($request->input('pass')),
+                // 'jenis_kelamin' => $request->input('jenis_kelamin'),
+                'role'          => "Non-Anggota",
                 'created_at'    => Carbon::now()->toRfc2822String(),
                 'updated_at'    => Carbon::now()->toRfc2822String(),
             ]);
             }, 5);
             Session::flash('success', 'Akun berhasil didaftarkan, silahkan tunggu akun anda divalidasi oleh admin');
-            return redirect()->route('student/show-login');
+            return redirect()->route('login');
         }
         catch(\Illuminate\Database\QueryException $e)
         {
@@ -143,7 +138,75 @@ class PenggunaController extends Controller
                 return redirect('/');
             }
             Session::flash('error', $errorCode);
-            return redirect()->route('student/show-register');
+            return redirect()->route('registerUmum');
+        }
+    }
+
+    public function RegisterAnggota(Request $request)
+    {
+        // dd($request->input('email'));
+        // dd($formatDate);
+
+        $validator = Validator::make($request->all(), [
+            'email'         => 'required|email|unique:pengguna',
+            'pass'          => 'required|min:8',
+            're_pass'       =>'required|min:8|same:pass',
+            'nama'          => 'required',
+            'nrp'          => 'required',
+            // 'jenis_kelamin' => 'required',
+            'notelp'        => 'required|max:15',
+            'idLine'        => 'required|max:255',
+            'alamat'        => 'required|max:256',
+        ],
+        [
+            'email.required' => 'Email harus diisi!',
+            'email.unique' => 'Email harus menggunakan email yang belum pernah dipakai!',
+            'pass.required' => 'Password harus diisi!',
+            'pass.min' => 'Password minimal terdiri dari 8 karakter!',
+            're_pass.required' => 'Konfirmasi Password harus diisi!',
+            're_pass.same' => 'Konfirmasi password harus sama dengan password yang diisikan!',
+            'nrp.required' => 'NRP harus diisi!',
+            // 'jenis_kelamin.required' => 'Jenis Kelamin harus diisi!',
+            'alamat.required' => 'Alamat Mahasiswa harus diisi!',
+            'notelp.required' => 'Nomor Handphone harus diisi!',
+            'notelp.max' => 'Nomor Handphone maksimal panjangnya 15 karakter!',
+            'idLine.required' => 'ID Line harus diisi!',
+            'idLine.max' => 'ID Line maksimal panjangnya 255 karakter!',
+            'nama.required' => 'Nama Pengguna harus diisi!',
+        ]);
+
+
+        if ($validator->fails()) {
+            // Session::flash('error', $validator->errors());
+            return redirect()->back()->withErrors($validator->messages())->withInput();;
+        }
+        try {
+
+            DB::transaction(function() use ($request) {
+            Pengguna::create([
+                'nama_pengguna' => $request->input('nama'),
+                'alamat'        => $request->input('alamat'),
+                'no_telp'       => $request->input('notelp'),
+                'id_line'       => $request->input('idLine'),
+                'email'         => $request->input('email'),
+                'password'      => Hash::make($request->input('pass')),
+                'nrp'           => $request->input('nrp'),
+                'role'          => "Anggota",
+                'created_at'    => Carbon::now()->toRfc2822String(),
+                'updated_at'    => Carbon::now()->toRfc2822String(),
+            ]);
+            }, 5);
+            Session::flash('success', 'Akun berhasil didaftarkan, silahkan tunggu akun anda divalidasi oleh admin');
+            return redirect()->route('login');
+        }
+        catch(\Illuminate\Database\QueryException $e)
+        {
+            $errorCode = $e->errorInfo[1];
+            if ($errorCode == 1062) {
+                return redirect('/');
+            }
+            Session::flash('error', $errorCode);
+            return redirect()->route('registerAnggota');
         }
     }
     /*<=============== Auth ===============>*/

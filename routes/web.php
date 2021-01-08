@@ -52,6 +52,9 @@ Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calenda
 // Route Register dan Login
 Route::get('/register-anggota', [PenggunaController::class, 'showRegisterFormAnggota'])->name('registerAnggota');
 Route::get('/register-umum', [PenggunaController::class, 'showRegisterFormUmum'])->name('registerUmum');
+Route::post('/register-anggota', [PenggunaController::class, 'RegisterAnggota'])->name('post.registerAnggota');
+Route::post('/register-umum', [PenggunaController::class, 'RegisterUmum'])->name('post.registerUmum');
 Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
+Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.login');
 
 
