@@ -22,17 +22,28 @@ class PageController extends Controller
 {
     public function showSewaStudio()
     {
-        if(request()->ajax())
-        {
-
-            $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
-            $end = (!empty($_GET["end"])) ? ($_GET["end"]) : ('');
-
-            $data = Sewa_Studio::whereDate('waktu_mulai', '>=', $start)->whereDate('waktu_selesai',   '<=', $end)->get(['id','waktu_mulai', 'waktu_selesai']);
-
-            return Response::json($data);
-        }
         return view('page.calendar');
     }
 
+    // public function getSewaStudio()
+    // {
+    //     $sewa = DB::table('sewa_studio')
+    //         ->select('id as title','waktu_mulai as start', 'waktu_selesai as end')
+    //         ->get();
+    //     echo json_encode($sewa);
+    // }
+
+    function getEvents(Request $request) {
+        $bookings = Sewa_Studio::get(['id as title','waktu_mulai as start','waktu_selesai as end']);
+        foreach ($bookings as $booking)
+        {
+            // Force timezone to Asia/Jakarta
+            $booking['start'] = Carbon::parse($booking['start'])->addHours(7);
+            $booking['end'] = Carbon::parse($booking['end'])->addHours(7);
+            $booking['color'] = "#ff0000";
+            $booking['textColor'] = "#000000";
+        }
+        echo json_encode($bookings);
+
+    }
 }
