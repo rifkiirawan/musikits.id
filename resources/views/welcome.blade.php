@@ -29,10 +29,14 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#persewaan">Persewaan</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#artikel">Artikel</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#hubungi-kami">Hubungi Kami</a></li>
-                        {{-- TODO: href login sama register --}}
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="">Login</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-secondary" href="">Register</a></li>
-                    </ul>
+                        @if (Session::has('login'))
+                            {{-- TODO: Nambah route ke profil anda --}}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="">Profil Anda</a></li>
+                        @else
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('login') }}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-secondary" href="{{ route('registerUmum') }}">Register</a></li>
+                        @endif
+                        </ul>
                 </div>
             </div>
         </nav>
@@ -53,12 +57,18 @@
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <h2 class="text-white mb-4">Persewaan Studio dan Alat Musik</h2>
-                        <p class="text-white-50">
-                            Untuk melakukan persewaan studio maupun alat musik, anda harus memiliki akun musikits.id. Apabila anda
-                            tidak memiliki akun musikits.id, anda bisa
-                            {{-- TODO: href ke register --}}
-                            <a href="">daftar akun sekarang.</a>
-                        </p>
+                        @if (Session::has('login'))
+                            <p class="text-white-50">
+                                Silakan pilih menu <b>Studio</b> jika ingin menyewa studio, atau pilih menu <b>Alat Musik</b> apabila ingin menyewa
+                                <a href="{{ route("registerUmum") }}">daftar akun sekarang.</a>
+                            </p>
+                        @else
+                            <p class="text-white-50">
+                                Untuk melakukan persewaan studio maupun alat musik, anda harus memiliki akun musikits.id. Apabila anda
+                                tidak memiliki akun musikits.id, anda bisa
+                                <a href="{{ route("registerUmum") }}">daftar akun sekarang.</a>
+                            </p>
+                        @endif
                         {{-- TODO: Tambahin href sewa studio sama alat musik --}}
                         <a class="btn btn-primary" href="">Studio </a>
                         <a class="btn btn-secondary" href="">Alat Musik </a>

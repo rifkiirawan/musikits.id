@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/', [HomeController::class, 'getArtikel'])->name('getArtikel');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('admin-login', [AdminController::class, 'showLogin'])->name('admin/login')->middleware('LoginTrue');
