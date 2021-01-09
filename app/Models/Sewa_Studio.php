@@ -9,7 +9,7 @@ class Sewa_Studio extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'status', 'waktu_mulai', 'waktu_selesai', 'total_harga','id_admin', 'id_pengguna'
+        'status', 'waktu_mulai', 'waktu_selesai','id_admin', 'id_pengguna'
     ];
     protected $table = 'sewa_studio';
 }

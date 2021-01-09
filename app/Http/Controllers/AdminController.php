@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\AlatBarang;
+use App\Models\Sewa_Studio;
 
 
 class AdminController extends Controller
@@ -599,6 +600,68 @@ class AdminController extends Controller
         $alat->delete();
         Session::flash('sukses', 'Inventaris berhasil dihapus');
         return redirect()->back();
+    }
+
+    public function listStudioBooking(Request $request){
+        $bookings =  DB::table('sewa_studio')
+        ->join('pengguna','pengguna.id','sewa_studio.id_pengguna')
+        ->select('sewa_studio.*', 'pengguna.nama_pengguna', 'pengguna.no_telp')
+        ->where('sewa_studio.status', '=', '1')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/sewa_studio/list', [
+            'nama' => $request->session()->get('nama'),
+            'bookings'  => $bookings
+        ]);
+    }
+
+    public function listNewStudioBooking(Request $request){
+        $bookings =  DB::table('sewa_studio')
+        ->join('pengguna','pengguna.id','sewa_studio.id_pengguna')
+        ->select('sewa_studio.*', 'pengguna.nama_pengguna', 'pengguna.no_telp')
+        ->where('sewa_studio.status', '=', '0')
+        ->orderBy('updated_at')
+        ->paginate(10);
+        return view('admin/dashboard/sewa_studio/verifikasi', [
+            'nama' => $request->session()->get('nama'),
+            'bookings'  => $bookings
+        ]);
+    }
+
+    public function approveStudioBooking(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $booking = Sewa_Studio::find($id);
+                $booking->status = 1;
+                $booking->save();
+            }, 5);
+            Session::flash('sukses', 'Penyewaan berhasil di-approve');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Penyewaan tidak berhasil di-approve'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function rejectStudioBooking(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $booking = Sewa_Studio::find($id);
+                $booking->status = 2;
+                $booking->save();
+            }, 5);
+            Session::flash('sukses', 'Penyewaan berhasil di-reject');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Penyewaan tidak berhasil di-reject'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function calendarStudioBooking(Request $request){
+        return view('admin/dashboard/sewa_studio/calendar', [
+            'nama' => $request->session()->get('nama'),
+        ]);
     }
 
 }

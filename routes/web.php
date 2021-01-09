@@ -57,18 +57,23 @@ Route::get('/admin/dashboard/list-inventory', [AdminController::class, 'showList
 Route::get('/admin/dashboard/detail-inventory/{id}', [AdminController::class, 'showDetailInventory'])->name('detail-inventory')->middleware('AdminCheck');
 Route::delete('admin/dashboard/delete-inventory/{inventory}',  [AdminController::class, 'deleteInventory'])->name('admin/delete/inventory')->middleware('AdminCheck');
 
-Route::get('list-new-account-umum', [AdminController::class, 'listNewUmum'])->name('list-new-account-umum')->middleware('AdminCheck');
-Route::put('list-new-account-umum/a/{id}', [AdminController::class, 'approveUmum'])->name('umum.approve')->middleware('AdminCheck');
-Route::put('list-new-account-umum/d/{id}', [AdminController::class, 'rejectUmum'])->name('umum.reject')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-new-account-umum', [AdminController::class, 'listNewUmum'])->name('list-new-account-umum')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-account-umum/a/{id}', [AdminController::class, 'approveUmum'])->name('umum.approve')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-account-umum/d/{id}', [AdminController::class, 'rejectUmum'])->name('umum.reject')->middleware('AdminCheck');
 
-Route::get('list-new-account-anggota', [AdminController::class, 'listNewAnggota'])->name('list-new-account-anggota')->middleware('AdminCheck');
-Route::put('list-new-account-anggota/a/{id}', [AdminController::class, 'approveAnggota'])->name('anggota.approve')->middleware('AdminCheck');
-Route::put('list-new-account-anggota/d/{id}', [AdminController::class, 'rejectAnggota'])->name('anggota.reject')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-new-account-anggota', [AdminController::class, 'listNewAnggota'])->name('list-new-account-anggota')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-account-anggota/a/{id}', [AdminController::class, 'approveAnggota'])->name('anggota.approve')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-account-anggota/d/{id}', [AdminController::class, 'rejectAnggota'])->name('anggota.reject')->middleware('AdminCheck');
 
-Route::get('list-account-umum', [AdminController::class, 'listUmum'])->name('list-account-umum')->middleware('AdminCheck');
-Route::get('list-account-anggota', [AdminController::class, 'listAnggota'])->name('list-account-anggota')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-account-umum', [AdminController::class, 'listUmum'])->name('list-account-umum')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-account-anggota', [AdminController::class, 'listAnggota'])->name('list-account-anggota')->middleware('AdminCheck');
 
+Route::get('/admin/dashboard/list-new-studio-booking', [AdminController::class, 'listNewStudioBooking'])->name('list-new-booking-studio')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-studio-booking/a/{id}', [AdminController::class, 'approveStudioBooking'])->name('booking.studio.approve')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-studio-booking/d/{id}', [AdminController::class, 'rejectStudioBooking'])->name('booking.studio.reject')->middleware('AdminCheck');
 
+Route::get('/admin/dashboard/list-studio-booking', [AdminController::class, 'listStudioBooking'])->name('list-booking-studio')->middleware('AdminCheck');
+Route::get('/admin/dashboard/calendar-studio-booking', [AdminController::class, 'calendarStudioBooking'])->name('calendar-booking-studio')->middleware('AdminCheck');
 
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
@@ -88,6 +93,7 @@ Route::group(['middleware' => ['LoginCheck']], function () {
     });
 
     Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
+    Route::post('/sewa-studio', [StudioController::class, 'store'])->name('sewa.studio.store');
 });
 
 Route::group(['prefix' => 'artikels'], function () {

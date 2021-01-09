@@ -34,12 +34,12 @@ class PageController extends Controller
     // }
 
     function getEvents(Request $request) {
-        $bookings = Sewa_Studio::get(['id as title','waktu_mulai as start','waktu_selesai as end']);
+        $bookings = Sewa_Studio::join('pengguna','pengguna.id','sewa_studio.id_pengguna')
+        ->where('sewa_studio.status','=','1')
+        ->get(['pengguna.nama_pengguna as title','waktu_mulai as start','waktu_selesai as end']);
         foreach ($bookings as $booking)
         {
             // Force timezone to Asia/Jakarta
-            $booking['start'] = Carbon::parse($booking['start'])->addHours(7);
-            $booking['end'] = Carbon::parse($booking['end'])->addHours(7);
             $booking['color'] = "#ff0000";
             $booking['textColor'] = "#000000";
         }

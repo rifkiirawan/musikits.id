@@ -50,16 +50,26 @@
 					</div>
 					<div class="col-md-4 col-md-pull-7">
 						<div class="booking-form">
+						@if ($message = Session::get('sukses'))
+							<div class="alert alert-success">
+								{{$message}}
+							</div>
+						@elseif($message = Session::get('gagal'))
+							<div class="alert alert-danger">
+								{{$message}}
+							</div>
+						@endif
                             {{-- TODO: Form POST belum --}}
-							<form>
+							<form role="form" action="{{ route('sewa.studio.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    			@csrf
                                 <div class="form-group">
                                     <span class="form-label">Mulai</span>
-                                    <input class="form-control" type="datetime-local" required>
+                                    <input class="form-control" name="waktu_mulai" type="datetime-local" required>
                                 </div>
                                 <div class="form-group">
                                     <span class="form-label">Selesai
                                     </span>
-                                    <input class="form-control" type="datetime-local" required>
+                                    <input class="form-control" name="waktu_selesai" type="datetime-local" required>
                                 </div>
 								<div class="form-btn">
 									<button class="submit-btn">Ajukan Sewa</button>

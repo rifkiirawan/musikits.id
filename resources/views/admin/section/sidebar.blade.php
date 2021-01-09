@@ -68,7 +68,7 @@
             <ul class="nav nav-treeview">
               <li class="nav-item ml-4">
                 <a href="{{route('list-account-anggota')}}" class="nav-link">
-                  @if (request()->path() == 'list-account-anggota')
+                  @if (request()->path() == 'admin/dashboard/list-account-anggota')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
@@ -78,7 +78,7 @@
               </li>
               <li class="nav-item ml-4">
                 <a href="{{route('list-account-umum')}}" class="nav-link">
-                  @if (request()->path() == 'list-account-umum')
+                  @if (request()->path() == 'admin/dashboard/list-account-umum')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
@@ -88,22 +88,22 @@
               </li>
               <li class="nav-item ml-4">
                 <a href="{{route('list-new-account-anggota')}}" class="nav-link">
-                  @if (request()->path() == 'list-new-account-anggota')
+                  @if (request()->path() == 'admin/dashboard/list-new-account-anggota')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
                   @endif
-                  <p>Verifikasi Pengguna Baru Anggota</p>
+                  <p>Verifikasi Pengguna Anggota</p>
                 </a>
               </li>
               <li class="nav-item ml-4">
                 <a href="{{route('list-new-account-umum')}}" class="nav-link">
-                  @if (request()->path() == 'list-new-account-umum')
+                  @if (request()->path() == 'admin/dashboard/list-new-account-umum')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
                   @endif
-                  <p>Verifikasi Pengguna Baru Umum</p>
+                  <p>Verifikasi Pengguna Umum</p>
                 </a>
               </li>
             </ul>
@@ -197,6 +197,47 @@
                     <i class="far fa-circle nav-icon"></i>
                   @endif
                   <p>Daftar Inventaris</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Sewa Studio
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ml-4">
+                <a href="{{route('list-booking-studio')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-studio-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Daftar Sewa Studio</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('list-new-booking-studio')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-new-studio-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Verifikasi Sewa Studio</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('calendar-booking-studio')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/calendar-studio-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Kalender Sewa Studio</p>
                 </a>
               </li>
             </ul>
