@@ -75,10 +75,12 @@ Route::post('/register-umum', [PenggunaController::class, 'RegisterUmum'])->name
 Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
 Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.login');
 
-Route::group(['middleware' => ['LoginCheck']], function () {
+Route::group(['middleware' => ['LoginTrue']], function () {
     Route::get('/user/dashboard', function () {
         return view('dashboard.index');
     });
+
+    Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
 });
 
 Route::group(['prefix' => 'artikels'], function () {
@@ -86,4 +88,4 @@ Route::group(['prefix' => 'artikels'], function () {
     Route::get('/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 });
 
-Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
+

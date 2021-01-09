@@ -50,6 +50,7 @@
 					</div>
 					<div class="col-md-4 col-md-pull-7">
 						<div class="booking-form">
+                            {{-- TODO: Form POST belum --}}
 							<form>
                                 <div class="form-group">
                                     <span class="form-label">Mulai</span>

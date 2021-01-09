@@ -19,7 +19,7 @@ class LoginCheck
         if($request->session()->has('login')) {
             return $next($request);
         }else{
-            return redirect('/login');
+            return redirect('/login-account');
         }
     }
 }
