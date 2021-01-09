@@ -49,6 +49,11 @@
 	border-radius: 4px;
 }
 
+.booking-form p{
+    font-size: 16px;
+    margin-bottom: 4.5rem;
+}
+
 .booking-form .form-group {
 	position: relative;
 	margin-bottom: 30px;
@@ -148,4 +153,10 @@
 	font-size: 16px;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 4.5rem;
+}
+
+.booking-cta .anjing {
+	font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.2rem;
 }

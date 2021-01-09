@@ -70,7 +70,7 @@
 					<div class="col-md-8 col-md-push-4">
 						<div class="booking-cta">
 							<h1>Sewa Alat Musik</h1>
-							<p>Silakan isi form ini apabila anda ingin menyewa alat musik. Untuk jadwal ketersediaannya
+							<p class="anjing">Silakan isi form ini apabila anda ingin menyewa alat musik. Untuk jadwal ketersediaannya
                                 anda dapat lihat di sini.
                             </p>
                             {{-- TODO: Route buat get data kalender sewa alat --}}
@@ -78,17 +78,18 @@
                             <div id="calendar"></div>
 						</div>
 					</div>
-					<div class="col-md-4 col-md-pull-8 align-self-center">
+					<div class="col-md-4 col-md-pull-8 align-self-center mt-5">
 						<div class="booking-form">
-						@if ($message = Session::get('sukses'))
-							<div class="alert alert-success">
-								{{$message}}
-							</div>
-						@elseif($message = Session::get('gagal'))
-							<div class="alert alert-danger">
-								{{$message}}
-							</div>
-                        @endif
+                            @if ($message = Session::get('sukses'))
+                                <div class="alert alert-success">
+                                    {{$message}}
+                                </div>
+                            @elseif($message = Session::get('gagal'))
+                                <div class="alert alert-danger">
+                                    {{$message}}
+                                </div>
+                            @endif
+                            {{-- <p></p> --}}
 							<form role="form" action="{{ route('sewa.alat.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
