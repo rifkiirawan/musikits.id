@@ -56,7 +56,6 @@
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
             <h1>{{ $artikel->nama }}</h1>
-            {{-- TODO: ambil subjudul di db --}}
             <h2 class="subheading">{{ $artikel->subjudul }}</h2>
             <span class="meta"><b>{{ $artikel->tipe }}</b> ini terbit pada
               {{ $artikel->created_at }}</span>
