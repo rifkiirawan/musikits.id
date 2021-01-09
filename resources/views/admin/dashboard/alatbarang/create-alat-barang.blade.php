@@ -82,7 +82,7 @@
                     <div class="form-group">
                         <div class="row px-3">
                             <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Status Barang: <p class="red">*</p></h6></label><br>
-                            <input class="form-control" type="text" id="status" name="status" value="{{ old('status') }}" placeholder="Status Barang" required autofocus readonly>
+                            <input class="form-control" type="text" id="status" name="status" placeholder="Status Barang" required autofocus readonly>
                             <div class="dropdown">
                               <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Pilih Status Barang
                                   <i class="fas fa-caret-down"></i>
