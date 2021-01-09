@@ -48,9 +48,11 @@
                         <thead class="thead-dark">
                         <tr>
                             <th>Judul</th>
+                            <th>Sub-judul</th>
                             <th>Tipe Informasi</th>
                             <th>Deskripsi</th>
                             <th>Gambar</th>
+                            <th>Admin Penulis</th>
                             <th>Created at</th>
                         </tr>
                         </thead>
@@ -58,6 +60,7 @@
                         @foreach($infos as $info)
                             <tr>
                                 <td>{{ $info->nama }}</td>
+                                <td>{{ $info->subjudul }}</td>
                                 <td>{{ $info->tipe }}</td>
                                 <td>
                                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-{{ $info->id }}">
@@ -111,6 +114,7 @@
                                     <!-- /.modal-dialog -->
                                     </div>
                                 </td>
+                                <td>{{ $info->nama_admin }}</td>
                                 <td>{{ $info->created_at }}</td>
                             </tr>
                         @endforeach
