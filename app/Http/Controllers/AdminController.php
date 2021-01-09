@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 use App\Models\Admin;
 use App\Models\Informasi;
+use App\Models\Pengguna;
 use Carbon\Carbon;
 use Exception;
 use Validator;
@@ -107,6 +108,119 @@ class AdminController extends Controller
         ]);
     }
 
+    public function listUmum(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Non-Anggota')
+        ->where('pengguna.status', '=', '1')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/list-umum', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function listAnggota(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Anggota')
+        ->where('pengguna.status', '=', '1')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/list-anggota', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function listNewUmum(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Non-Anggota')
+        ->where('pengguna.status', '=', '0')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/verifikasi-umum', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function approveUmum(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Pengguna::find($id);
+                $student->status = 1;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-approve');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-approve,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function rejectUmum(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Student::find($id);
+                $student->status = 2;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-reject');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-reject,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function listNewAnggota(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Anggota')
+        ->where('pengguna.status', '=', '0')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/verifikasi-anggota', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function approveAnggota(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Pengguna::find($id);
+                $student->status = 1;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-approve');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-approve,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function rejectAnggota(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Student::find($id);
+                $student->status = 2;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-reject');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-reject,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
     public function showCreateInfo(Request $request) {
         return view('admin.dashboard.informasi.create-info', [
             'nama' => $request->session()->get('nama'),
@@ -165,6 +279,101 @@ class AdminController extends Controller
         ]);
     }
 
+    public function updateInfo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_info'       => 'required',
+            'nama'         => 'required',
+            'deskripsi'    => 'nullable',
+            'tipe'         => 'required',
+            'subjudul'     => 'required',
+            'gambar'       => 'nullable|mimes:png|max:1024',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+
+            $info = Informasi::find($request->input('id_info'));
+            $filename = null;
+            if( $request->file('gambar') != null)
+            {
+                $berkas = $request->file('gambar');
+                $nama = $request->input('nama');
+                $ext = $berkas->getClientOriginalExtension();
+                $current = Carbon::now()->format('YmdHs');
+                $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
+            }else{
+                $filename = '';
+            }
+            $gambarlama = 'Data/Informasi/'.$info->gambar;
+            $tujuan = 'Data/Informasi';
+
+            if( $request->input('deskripsi') != null )
+            {
+                $deskripsi = $request->input('deskripsi');
+            }
+            else
+            {
+                $deskripsi = $info->deskripsi;
+            }
+
+            if($request->file('gambar') === null)
+            {
+                DB::transaction(function() use ($request,$deskripsi) {
+                    Informasi::where([
+                        'id' => $request->input('id_info')
+                    ])->update([
+                        'nama' => $request->input('nama'),
+                        'deskripsi' => $deskripsi,
+                        'tipe' => $request->input('tipe'),
+                        'subjudul' => $request->input('subjudul'),
+                        'updated_at' => Carbon::now()
+                    ]);
+                }, 5);
+                Session::flash('sukses', 'Info berhasil diupdate');
+                return redirect()->back();
+            }
+            else
+            {
+                DB::transaction(function() use ($request, $filename, $deskripsi) {
+                    Informasi::where([
+                        'id' => $request->input('id_info')
+                    ])->update([
+                        'nama' => $request->input('nama'),
+                        'deskripsi' => $deskripsi,
+                        'tipe' => $request->input('tipe'),
+                        'subjudul' => $request->input('subjudul'),
+                        'gambar'    => $filename,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }, 5);
+                if(\File::exists(public_path($gambarlama)))
+                {
+                    \File::delete(public_path($gambarlama));  // or unlink($filename);
+                }
+                $berkas->move($tujuan, $filename);
+                Session::flash('sukses', 'Informasi berhasil diupdate');
+                return redirect()->back();
+            }
+
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Informasi gagal diupdate, '.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
+    public function deleteInfo($id)
+    {
+        $info = Informasi::find($id);
+        $info->delete();
+        Session::flash('sukses', 'Informasi berhasil dihapus');
+        return redirect()->back();
+    }
+
     public function showCreateStuff(Request $request)
     {
         return view('admin.dashboard.alatbarang.create-alat-barang', [
@@ -199,6 +408,7 @@ class AdminController extends Controller
                     'nama_alat' => $request->input('nama'),
                     'harga_sewa' => $request->input('harga'),
                     'status_barang' => $request->input('status'),
+                    'id_admin'  => $request->session()->get('id'),
                     'gambar' => $filename,
                     'created_at' => Carbon::now()->toRfc2822String(),
                     'updated_at' => Carbon::now()->toRfc2822String()
@@ -215,10 +425,94 @@ class AdminController extends Controller
 
     public function listStuff(Request $request)
     {
-        $infos = AlatBarang::paginate(10);
+        $alats = AlatBarang::join('admin','admin.id', 'alat.id_admin')
+        ->select('alat.*','admin.nama as nama_admin')->paginate(10);
         return view('admin.dashboard.alatbarang.list-alat-barang', [
             'nama' => $request->session()->get('nama'),
-            'infos'  => $infos
+            'alats'  => $alats
         ]);
+    }
+
+    public function updateStuff(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_alat'       => 'required',
+            'nama'         => 'required',
+            'harga'        => 'required',
+            'status'       => 'required',
+            'gambar'       => 'nullable|mimes:png|max:1024',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+        try {
+
+            $alat = AlatBarang::find($request->input('id_alat'));
+            $filename = null;
+            if( $request->file('gambar') != null)
+            {
+                $berkas = $request->file('gambar');
+                $nama = $request->input('nama');
+                $ext = $berkas->getClientOriginalExtension();
+                $current = Carbon::now()->format('YmdHs');
+                $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
+            }else{
+                $filename = '';
+            }
+            // dd($filename);
+            $gambarlama = 'Data/AlatBarang/'.$alat->gambar;
+            $tujuan = 'Data/AlatBarang';
+
+
+            if($request->file('gambar') === null)
+            {
+                DB::transaction(function() use ($request) {
+                    AlatBarang::where([
+                        'id' => $request->input('id_alat')
+                    ])->update([
+                        'nama_alat' => $request->input('nama'),
+                        'harga_sewa' => $request->input('harga'),
+                        'status_barang' => $request->input('status'),
+                        'updated_at' => Carbon::now()
+                    ]);
+                }, 5);
+                Session::flash('sukses', 'Alat Barang berhasil diupdate');
+                return redirect()->back();
+            }
+            else
+            {
+                DB::transaction(function() use ($request, $filename) {
+                    AlatBarang::where([
+                        'id' => $request->input('id_alat')
+                    ])->update([
+                        'nama_alat' => $request->input('nama'),
+                        'harga_sewa' => $request->input('harga'),
+                        'status_barang' => $request->input('status'),
+                        'gambar'    => $filename,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }, 5);
+                if(\File::exists(public_path($gambarlama)))
+                {
+                    \File::delete(public_path($gambarlama));  // or unlink($filename);
+                }
+                $berkas->move($tujuan, $filename);
+                Session::flash('sukses', 'Alat Barang berhasil diupdate');
+                return redirect()->back();
+            }
+        }
+        catch(Exception $e) {
+            Session::flash('gagal', 'Alat Barang gagal diupdate, '.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function deleteStuff($id)
+    {
+        $alat = AlatBarang::find($id);
+        $alat->delete();
+        Session::flash('sukses', 'Alat berhasil dihapus');
+        return redirect()->back();
     }
 }

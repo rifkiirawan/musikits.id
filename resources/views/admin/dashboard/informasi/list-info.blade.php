@@ -1,6 +1,11 @@
 @extends('admin/section/app')
 @section('stylesheets')
 <style>
+.red{
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
 </style>
 @endsection
 
@@ -53,6 +58,8 @@
                             <th>Deskripsi</th>
                             <th>Gambar</th>
                             <th>Admin Penulis</th>
+                            <th>Edit</th>
+                            <th>Hapus</th>
                             <th>Created at</th>
                         </tr>
                         </thead>
@@ -115,6 +122,117 @@
                                     </div>
                                 </td>
                                 <td>{{ $info->nama_admin }}</td>
+                                <td>
+                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal2-{{ $info->id }}">
+                                    Edit
+                                </button>
+                                <div class="modal fade" id="modal2-{{ $info->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Edit Informasi</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body" style="display: block;">
+                                        <form role="form" action="{{ route('admin/update/info') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                            @csrf
+                                            <input id="id_info" name="id_info" value="{{$info->id}}" hidden/>
+                                            <div class="form-group">
+                                                <div class="row px-3">
+                                                    <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Judul<p class="red">*</p></h6></label>
+                                                    <input class="form-control" type="text" name="nama" value="{{ $info->nama }}" placeholder="Masukkan Judul Informasi" required autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row px-3">
+                                                    <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Sub-judul<p class="red">*</p></h6></label>
+                                                    <input class="form-control" type="text" name="subjudul" value="{{ $info->subjudul }}" placeholder="Masukkan Sub-judul Informasi" required autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row px-3">
+                                                    <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Deskripsi Informasi</h6></label>
+                                                    <textarea type="text" name="deskripsi" class="form-control" value="{{ $info->deskripsi }}" id="summernote" placeholder="Masukkan Deskripsi Informasi yang baru"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row px-3">
+                                                    <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Gambar</h6></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" id="inputGroupFileAddon03"><i class="fas fa-file-upload"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" name="gambar" accept="image/png" id="gambar" aria-describedby="inputGroupFileAddon03">
+                                                            <label class="custom-file-label"  id="idgambar" for="gambar">Upload Gambar Terbaru</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row px-3">
+                                                    <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Tipe Informasi: <p class="red">*</p></h6></label><br>
+                                                    <input class="form-control" type="text" id="tipe" name="tipe" value="{{ $info->tipe }}" placeholder="Masukkan Tipe Informasi" required autofocus readonly>
+                                                    <div class="dropdown">
+                                                    <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Tipe Informasi
+                                                        <i class="fas fa-caret-down"></i>
+                                                    </div>
+                                                    <ul class="dropdown-menu univ_dropdown">
+                                                        <li class="dropdown-item">
+                                                            <a onclick="semesterSetter('Artikel')">Artikel</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a onclick="semesterSetter('Kegiatan')">Kegiatan</a>
+                                                        </li>
+                                                    </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3 px-3"> <button type="submit" class="btn btn-primary text-center">Edit</button> </div>
+                                        </form>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                                        </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                    </div>
+                                </td>
+                                <td>
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal3-{{ $info->id }}">
+                                    Hapus
+                                </button>
+                                    <div class="modal fade" id="modal3-{{ $info->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p style="text-align: center; font-weight: bold; font-size: 16px">Apakah anda yakin ingin menghapus informasi ini?</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Tidak</button>
+                                            <form action="{{ route('admin/delete/info', $info->id) }}" method="post">
+                                                {{ csrf_field() }}
+                                                {{ method_field('delete') }}
+                                                <button type="submit" class="btn btn-sm btn-danger">Yakin</button>
+                                            </form>
+                                        </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
+                                </td>
                                 <td>{{ $info->created_at }}</td>
                             </tr>
                         @endforeach
@@ -136,4 +254,18 @@
         </div>
     </section>
 </div>
+@endsection
+@section('scripts')
+<script>
+$(document).ready(function(){
+  $('#gambar').change(function(e2){
+		var gambar = e2.target.files[0].name;
+        // dd(gambar);
+		$('#idgambar').html(gambar);
+	});
+});
+function semesterSetter(semester){
+  document.getElementById('tipe').value = semester;
+}
+</script>
 @endsection
