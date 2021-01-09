@@ -108,7 +108,7 @@
                                     <div class="d-flex h-100">
                                         <div class="project-text w-100 my-auto text-center text-lg-left">
                                             <h4 class="text-white">{{ $artikel->nama }}</h4>
-                                            <p class="mb-0 text-white-50">{{ $artikel->deskripsi }}</p>
+                                            <p class="mb-0 text-white-50">{{ $artikel->subjudul }}</p>
                                             <hr class="d-none d-lg-block mb-4 ml-0" />
                                             <a href="{{ route('artikel.show', $artikel->id) }}" class="btn btn-secondary">Lanjut Baca</a>
                                         </div>

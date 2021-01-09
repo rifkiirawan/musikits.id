@@ -74,8 +74,7 @@
                     {{ $artikel->nama }}
                 </h2>
                 <h3 class="post-subtitle">
-                    {{-- TODO: route subjudul jangan lupa --}}
-                    Problems look mighty small from 150 miles up
+                    {{ $artikel->subjudul }}
                 </h3>
                 </a>
                 <p class="post-meta">{{ $artikel->tipe }}</b> ini terbit pada

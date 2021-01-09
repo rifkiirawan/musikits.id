@@ -57,7 +57,7 @@
           <div class="post-heading">
             <h1>{{ $artikel->nama }}</h1>
             {{-- TODO: ambil subjudul di db --}}
-            <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+            <h2 class="subheading">{{ $artikel->subjudul }}</h2>
             <span class="meta"><b>{{ $artikel->tipe }}</b> ini terbit pada
               {{ $artikel->created_at }}</span>
           </div>
