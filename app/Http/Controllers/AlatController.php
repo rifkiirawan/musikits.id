@@ -4,6 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AlatBarang;
+use Illuminate\Support\Facades\Hash;
+use Session;
+use App\Models\Admin;
+use App\Models\Informasi;
+use App\Models\Pengguna;
+use App\Models\Inventaris;
+use App\Models\InventarisDetail;
+use Carbon\Carbon;
+use Exception;
+use Validator;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Models\Sewa_Studio;
+use App\Models\Sewa_Alat;
 
 class AlatController extends Controller
 {
@@ -37,7 +53,35 @@ class AlatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'id_alat'         => 'required',
+            'waktu_mulai'         => 'required',
+            'waktu_selesai'         => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+                DB::transaction(function() use ($request){
+                    Sewa_Alat::create([
+                        'id_alat' => $request->input('id_alat'),
+                        'waktu_mulai' => $request->input('waktu_mulai'),
+                        'waktu_selesai' => $request->input('waktu_selesai'),
+                        'id_pengguna' => $request->session()->get('id'),
+                        'created_at' => Carbon::now()->toRfc2822String(),
+                        'updated_at' => Carbon::now()->toRfc2822String()
+                    ]);
+                }, 5);
+            Session::flash('sukses', 'Penyewaan berhasil diajukan, silahkan menunggu verifikasi dari admin');
+            return redirect()->back();
+        } catch (Exception $e) {
+            Session::flash('gagal', 'Penyewaan tidak berhasil diajukan'.$e->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**

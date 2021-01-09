@@ -3,10 +3,6 @@
 <link href="{{ asset('fullcalendar/main.css') }}" rel='stylesheet' />
 <script src="{{ asset('fullcalendar/main.js') }}"></script>
 <style>
-body {
-    margin: 40px 10px;
-    padding: 0;
-  }
 
   #calendar {
     max-width: 1100px;

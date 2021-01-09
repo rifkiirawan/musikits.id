@@ -242,6 +242,47 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-book-open"></i>
+              <p>
+                Sewa Alat
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ml-4">
+                <a href="{{route('list-booking-stuff')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-stuff-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Daftar Sewa Alat</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('list-new-booking-stuff')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-new-stuff-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Verifikasi Sewa Alat</p>
+                </a>
+              </li>
+              {{--<li class="nav-item ml-4">
+                <a href="{{route('calendar-booking-studio')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/calendar-studio-booking')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Kalender Sewa Studio</p>
+                </a>
+              </li>--}}
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
