@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\StudioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,11 +65,9 @@ Route::group(['middleware' => ['LoginCheck']], function () {
     });
 });
 
-// Route::get('/detail-artikel', function () {
-//     return view('artikel.index');
-// });
-
 Route::group(['prefix' => 'artikels'], function () {
     Route::get('/', [ArtikelController::class, 'index'])->name('artikel.index');
     Route::get('/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 });
+
+Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
