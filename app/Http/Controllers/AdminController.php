@@ -119,6 +119,7 @@ class AdminController extends Controller
             'nama'         => 'required',
             'deskripsi'    => 'required',
             'tipe'         => 'required',
+            'subjudul'     => 'required',
             'gambar'       => 'required|mimes:png|max:2048',
         ]);
 
@@ -139,7 +140,9 @@ class AdminController extends Controller
                     'nama' => $request->input('nama'),
                     'deskripsi' => $request->input('deskripsi'),
                     'tipe' => $request->input('tipe'),
+                    'subjudul' => $request->input('subjudul'),
                     'gambar' => $filename,
+                    'id_admin'  => $request->session()->get('id'),
                     'created_at' => Carbon::now()->toRfc2822String(),
                     'updated_at' => Carbon::now()->toRfc2822String()
                 ]);
@@ -154,7 +157,8 @@ class AdminController extends Controller
     }
 
     public function listInfo(Request $request) {
-        $infos = Informasi::paginate(10);
+        $infos = Informasi::join('admin','admin.id', 'informasi.id_admin')
+        ->select('informasi.*','admin.nama as nama_admin')->paginate(10);
         return view('admin.dashboard.informasi.list-info', [
             'nama' => $request->session()->get('nama'),
             'infos'  => $infos

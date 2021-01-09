@@ -1,6 +1,11 @@
 @extends('admin/section/app')
 @section('stylesheets')
 <style>
+.red{
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
 </style>
 @endsection
 
@@ -49,19 +54,25 @@
                     @csrf
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Judul</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Judul<p class="red">*</p></h6></label>
                             <input class="form-control" type="text" name="nama" placeholder="Masukkan Judul Informasi" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Deskripsi Informasi</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Sub-judul<p class="red">*</p></h6></label>
+                            <input class="form-control" type="text" name="subjudul" placeholder="Masukkan Sub-judul Informasi" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row px-3">
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Deskripsi Informasi<p class="red">*</p></h6></label>
                             <textarea type="text" name="deskripsi" class="form-control" id="summernote" placeholder="Masukkan Deskripsi Informasi"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Gambar</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Gambar<p class="red">*</p></h6></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button type="button" id="inputGroupFileAddon03"><i class="fas fa-file-upload"></i>
@@ -76,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Tipe Informasi: </h6></label><br>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Tipe Informasi: <p class="red">*</p></h6></label><br>
                             <input class="form-control" type="text" id="tipe" name="tipe" value="{{ old('tipe') }}" placeholder="Masukkan Tipe Informasi" required autofocus readonly>
                             <div class="dropdown">
                               <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Tipe Informasi

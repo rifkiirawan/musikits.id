@@ -9,7 +9,7 @@ class Informasi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama', 'deskripsi', 'gambar', 'tipe','id_admin'
+        'nama', 'subjudul','deskripsi', 'gambar', 'tipe','id_admin'
     ];
     protected $table = 'informasi';
 }
