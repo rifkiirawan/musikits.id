@@ -50,6 +50,11 @@ Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])
 Route::post('/admin/dashboard/update-stuff', [AdminController::class, 'updateStuff'])->name('admin/update/stuff')->middleware('AdminCheck');
 Route::delete('admin/dashboard/delete-stuff/{stuff}',  [AdminController::class, 'deleteStuff'])->name('admin/delete/stuff')->middleware('AdminCheck');
 
+Route::get('/admin/dashboard/create-inventory', [AdminController::class, 'showCreateInventory'])->name('show-create-inventory')->middleware('AdminCheck');
+Route::post('/admin/dashboard/create-inventory', [AdminController::class, 'createInventory'])->name('create-inventory')->middleware('AdminCheck');
+Route::get('/admin/dashboard/list-inventory', [AdminController::class, 'showListInventory'])->name('show-list-inventory')->middleware('AdminCheck');
+Route::get('/admin/dashboard/detail-inventory/{id}', [AdminController::class, 'showDetailInventory'])->name('detail-inventory')->middleware('AdminCheck');
+Route::delete('admin/dashboard/delete-inventory/{inventory}',  [AdminController::class, 'deleteInventory'])->name('admin/delete/inventory')->middleware('AdminCheck');
 
 Route::get('list-new-account-umum', [AdminController::class, 'listNewUmum'])->name('list-new-account-umum')->middleware('AdminCheck');
 Route::put('list-new-account-umum/a/{id}', [AdminController::class, 'approveUmum'])->name('umum.approve')->middleware('AdminCheck');
@@ -61,6 +66,8 @@ Route::put('list-new-account-anggota/d/{id}', [AdminController::class, 'rejectAn
 
 Route::get('list-account-umum', [AdminController::class, 'listUmum'])->name('list-account-umum')->middleware('AdminCheck');
 Route::get('list-account-anggota', [AdminController::class, 'listAnggota'])->name('list-account-anggota')->middleware('AdminCheck');
+
+
 
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
@@ -88,3 +95,8 @@ Route::group(['prefix' => 'artikels'], function () {
     Route::get('/', [ArtikelController::class, 'index'])->name('artikel.index');
     Route::get('/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 });
+
+Route::get('logout', function(){
+    Session::flush();
+    return redirect('login-account');
+  })->name('user/logout');

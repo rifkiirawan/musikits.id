@@ -32,6 +32,13 @@
                         @if (Session::has('login'))
                             {{-- TODO: Nambah route ke profil anda --}}
                             <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="">Profil Anda</a></li>
+                            @if (Session::has('role'))
+                                @if(Session::get('role') == "admin")
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('admin/logout') }}">Keluar</a></li>
+                                @else
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('user/logout') }}">Keluar</a></li>
+                                @endif
+                            @endif
                         @else
                             <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('login') }}">Login</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-secondary" href="{{ route('registerUmum') }}">Register</a></li>

@@ -8,6 +8,8 @@ use Session;
 use App\Models\Admin;
 use App\Models\Informasi;
 use App\Models\Pengguna;
+use App\Models\Inventaris;
+use App\Models\InventarisDetail;
 use Carbon\Carbon;
 use Exception;
 use Validator;
@@ -515,4 +517,88 @@ class AdminController extends Controller
         Session::flash('sukses', 'Alat berhasil dihapus');
         return redirect()->back();
     }
+
+    public function showCreateInventory(Request $request) {
+        $alats = AlatBarang::all();
+        return view('admin.dashboard.inventaris.create-inventaris', [
+            'nama' => $request->session()->get('nama'),
+            'alats' => $alats
+        ]);
+    }
+
+    public function createInventory(Request $request){
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'tahun'         => 'required',
+            'bulan'         => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            Session::flash('gagal', $validator->errors());
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            $id = DB::table('inventaris')->insertGetId([
+                'tahun' => $request->input('tahun'),
+                'bulan' => $request->input('bulan'),
+                'id_admin'  => $request->session()->get('id'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+            $alats = AlatBarang::all();
+            foreach($alats as $alat)
+            {
+                DB::transaction(function() use ($request, $alat, $id){
+                    InventarisDetail::create([
+                        'status_barang' => $alat->status_barang,
+                        'id_alat' => $alat->id,
+                        'id_inventaris' => $id,
+                        'created_at' => Carbon::now()->toRfc2822String(),
+                        'updated_at' => Carbon::now()->toRfc2822String()
+                    ]);
+                }, 5);
+            }
+            Session::flash('sukses', 'Inventaris berhasil ditambahkan');
+            return redirect()->back();
+        } catch (Exception $e) {
+            Session::flash('gagal', 'Inventaris tidak berhasil ditambahkan, '.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function showListInventory(Request $request) {
+        $inventaris = Inventaris::paginate(10);
+        return view('admin.dashboard.inventaris.list-inventaris', [
+            'nama' => $request->session()->get('nama'),
+            'inventaris' => $inventaris
+        ]);
+    }
+
+    public function showDetailInventory(Request $request, $id) {
+        $alats = DB::table('inventaris_detail')
+        ->join('alat','alat.id', 'inventaris_detail.id_alat')
+        ->select('inventaris_detail.*','alat.gambar', 'alat.nama_alat')
+        ->where('inventaris_detail.id_inventaris','=', $id)
+        ->get();
+        $inventaris = DB::table('inventaris')
+        ->select('inventaris.bulan as bulan','inventaris.tahun as tahun')
+        ->where('inventaris.id','=', $id)
+        ->get();
+        // dd($inventaris);
+        return view('admin.dashboard.inventaris.detail-inventaris', [
+            'nama' => $request->session()->get('nama'),
+            'alats' => $alats,
+            'inventaris' => $inventaris
+        ]);
+    }
+
+    public function deleteInventory($id)
+    {
+        $alat = Inventaris::find($id);
+        $alat->delete();
+        Session::flash('sukses', 'Inventaris berhasil dihapus');
+        return redirect()->back();
+    }
+
 }

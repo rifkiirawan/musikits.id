@@ -170,6 +170,37 @@
               </li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-dolly-flatbed"></i>
+              <p>
+                Inventaris
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ml-4">
+                <a href="{{route('show-create-inventory')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/create-inventory')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Buat Inventaris</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('show-list-inventory')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/list-inventory')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Daftar Inventaris</p>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
