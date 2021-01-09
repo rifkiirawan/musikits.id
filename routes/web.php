@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\ArtikelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,4 +73,13 @@ Route::group(['middleware' => ['LoginCheck']], function () {
     Route::get('/user/dashboard', function () {
         return view('dashboard.index');
     });
+});
+
+// Route::get('/detail-artikel', function () {
+//     return view('artikel.index');
+// });
+
+Route::group(['prefix' => 'artikels'], function () {
+    Route::get('/', [ArtikelController::class, 'index'])->name('artikel.index');
+    Route::get('/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
 });

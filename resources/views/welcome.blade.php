@@ -81,7 +81,8 @@
         <section class="projects-section bg-light" id="artikel">
             <div class="container">
                 <!-- Featured Artikel-->
-                <h1 class="text-center text-black mb-4">Artikel</h1>
+                <h1 class="text-center text-black mb-2">Artikel</h1>
+                <h5 class="text-center text-muted mb-4"><a href="{{ route('artikel.index') }}">Lihat semua artikel</a></h5>
                 @foreach ($top as $top)
                     <div class="row align-items-center no-gutters mb-4 mb-lg-5">
                         <div class="col-xl-8 col-lg-7"><img class="frameImg img-fluid mb-3 mb-lg-0" src="{{ url('Data/Informasi/' . $top->gambar) }}" alt="" /></div>
@@ -91,8 +92,7 @@
                                 <p class="text-black-50 mb-0">{{ $top->deskripsi }}</p>
                             </div>
                             <div class="featured-text-button text-center text-lg-left">
-                                {{-- TODO: tambain href ke link artikel --}}
-                                <a href="" class="btn btn-primary">Lanjut Baca</a>
+                                <a href="{{ route('artikel.show', $top->id) }}" class="btn btn-primary">Lanjut Baca</a>
                             </div>
                         </div>
                     </div>
@@ -108,10 +108,9 @@
                                     <div class="d-flex h-100">
                                         <div class="project-text w-100 my-auto text-center text-lg-left">
                                             <h4 class="text-white">{{ $artikel->nama }}</h4>
-                                            <p class="mb-0 text-white-50">{{ $artikel->deskripsi }}</p>
+                                            <p class="mb-0 text-white-50">{{ $artikel->subjudul }}</p>
                                             <hr class="d-none d-lg-block mb-4 ml-0" />
-                                            {{-- TODO: tambain href ke link artikel --}}
-                                            <a href="" class="btn btn-secondary">Lanjut Baca</a>
+                                            <a href="{{ route('artikel.show', $artikel->id) }}" class="btn btn-secondary">Lanjut Baca</a>
                                         </div>
                                     </div>
                                 </div>
@@ -127,8 +126,7 @@
                                             <h4 class="text-white">{{ $artikel->nama }}</h4>
                                             <p class="mb-0 text-white-50">{{ $artikel->deskripsi }}</p>
                                             <hr class="d-none d-lg-block mb-4 mr-0" />
-                                            {{-- TODO: tambain href ke link artikel --}}
-                                            <a href="" class="btn btn-secondary">Lanjut Baca</a>
+                                            <a href="{{ route('artikel.show', $artikel->id) }}" class="btn btn-secondary">Lanjut Baca</a>
                                         </div>
                                     </div>
                                 </div>
