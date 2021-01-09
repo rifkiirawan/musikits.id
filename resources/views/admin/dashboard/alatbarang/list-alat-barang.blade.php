@@ -47,59 +47,35 @@
                     <table class="table table-bordered" id="admin_table">
                         <thead class="thead-dark">
                         <tr>
-                            <th>Judul</th>
-                            <th>Tipe Informasi</th>
-                            <th>Deskripsi</th>
+                            <th>Nama Alat</th>
+                            <th>Status Alat</th>
+                            <th>Harga Sewa</th>
                             <th>Gambar</th>
+                            <th>Admin Penginput</th>
                             <th>Created at</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($infos as $info)
+                        @foreach($alats as $alat)
                             <tr>
-                                <td>{{ $info->nama }}</td>
-                                <td>{{ $info->tipe }}</td>
+                                <td>{{ $alat->nama_alat }}</td>
+                                <td>{{ $alat->status_barang }}</td>
+                                <td>{{ $alat->harga_sewa }}</td>
                                 <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-{{ $info->id }}">
-                                    Lihat Deskripsi
-                                </button>
-                                <div class="modal fade" id="modal-{{ $info->id }}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Deskripsi Informasi</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body" style="display: block;">
-                                            <p>{{$info->deskripsi}}</p>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                        </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                    </div>
-                                </td>
-                                <td>
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal1-{{ $info->id }}">
+                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal1-{{ $alat->id }}">
                                     Lihat Gambar
                                 </button>
-                                <div class="modal fade" id="modal1-{{ $info->id }}">
+                                <div class="modal fade" id="modal1-{{ $alat->id }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Gambar Informasi</h4>
+                                            <h4 class="modal-title">Gambar Alat Barang</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body" style="display: block;">
-                                                <img src="{{asset('Data/Informasi/').'/'.$info->gambar}}" width="100%" height="auto" frameborder="0" style="margin-left: auto; margin-right: auto; display:block;"></img>
+                                                <img src="{{asset('Data/AlatBarang/').'/'.$alat->gambar}}" width="100%" height="auto" frameborder="0" style="margin-left: auto; margin-right: auto; display:block;"></img>
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -111,7 +87,8 @@
                                     <!-- /.modal-dialog -->
                                     </div>
                                 </td>
-                                <td>{{ $info->created_at }}</td>
+                                <td>{{ $alat->nama_admin }}</td>
+                                <td>{{ $alat->created_at }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -121,7 +98,7 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
-                    {{ $infos->links() }}
+                    {{ $alats->links() }}
                     {{-- <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>

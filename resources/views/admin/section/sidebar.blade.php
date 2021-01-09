@@ -59,6 +59,57 @@
           {{-- Home --}}
           <li class="nav-item">
             <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Pengguna
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ml-4">
+                <a href="{{route('list-account-anggota')}}" class="nav-link">
+                  @if (request()->path() == 'list-account-anggota')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Daftar Pengguna Anggota</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('list-account-umum')}}" class="nav-link">
+                  @if (request()->path() == 'list-account-umum')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Daftar Pengguna Umum</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('list-new-account-anggota')}}" class="nav-link">
+                  @if (request()->path() == 'list-new-account-anggota')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Verifikasi Pengguna Baru Anggota</p>
+                </a>
+              </li>
+              <li class="nav-item ml-4">
+                <a href="{{route('list-new-account-umum')}}" class="nav-link">
+                  @if (request()->path() == 'list-new-account-umum')
+                    <i class="fas fa-circle nav-icon text-info"></i>
+                  @else
+                    <i class="far fa-circle nav-icon"></i>
+                  @endif
+                  <p>Verifikasi Pengguna Baru Umum</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-info-circle"></i>
               <p>
                 Informasi

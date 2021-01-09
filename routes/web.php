@@ -45,6 +45,17 @@ Route::get('/admin/dashboard/create-stuff', [AdminController::class, 'showCreate
 Route::post('/admin/dashboard/create-stuff-process', [AdminController::class, 'createStuff'])->name('admin/create/stuff/process')->middleware('AdminCheck');
 Route::get('/admin/dashboard/list-stuff', [AdminController::class, 'listStuff'])->name('admin/list/stuff')->middleware('AdminCheck');
 
+Route::get('list-new-account-umum', [AdminController::class, 'listNewUmum'])->name('list-new-account-umum')->middleware('AdminCheck');
+Route::put('list-new-account-umum/a/{id}', [AdminController::class, 'approveUmum'])->name('umum.approve')->middleware('AdminCheck');
+Route::put('list-new-account-umum/d/{id}', [AdminController::class, 'rejectUmum'])->name('umum.reject')->middleware('AdminCheck');
+
+Route::get('list-new-account-anggota', [AdminController::class, 'listNewAnggota'])->name('list-new-account-anggota')->middleware('AdminCheck');
+Route::put('list-new-account-anggota/a/{id}', [AdminController::class, 'approveAnggota'])->name('anggota.approve')->middleware('AdminCheck');
+Route::put('list-new-account-anggota/d/{id}', [AdminController::class, 'rejectAnggota'])->name('anggota.reject')->middleware('AdminCheck');
+
+Route::get('list-account-umum', [AdminController::class, 'listUmum'])->name('list-account-umum')->middleware('AdminCheck');
+Route::get('list-account-anggota', [AdminController::class, 'listAnggota'])->name('list-account-anggota')->middleware('AdminCheck');
+
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
 

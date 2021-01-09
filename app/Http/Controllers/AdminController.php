@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Session;
 use App\Models\Admin;
 use App\Models\Informasi;
+use App\Models\Pengguna;
 use Carbon\Carbon;
 use Exception;
 use Validator;
@@ -107,6 +108,119 @@ class AdminController extends Controller
         ]);
     }
 
+    public function listUmum(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Non-Anggota')
+        ->where('pengguna.status', '=', '1')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/list-umum', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function listAnggota(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Anggota')
+        ->where('pengguna.status', '=', '1')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/list-anggota', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function listNewUmum(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Non-Anggota')
+        ->where('pengguna.status', '=', '0')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/verifikasi-umum', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function approveUmum(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Pengguna::find($id);
+                $student->status = 1;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-approve');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-approve,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function rejectUmum(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Student::find($id);
+                $student->status = 2;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-reject');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-reject,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function listNewAnggota(Request $request){
+        $users =  DB::table('pengguna')
+        ->select('pengguna.*')
+        ->where('pengguna.role','=', 'Anggota')
+        ->where('pengguna.status', '=', '0')
+        ->orderBy('created_at')
+        ->paginate(10);
+        return view('admin/dashboard/pengguna/verifikasi-anggota', [
+            'nama' => $request->session()->get('nama'),
+            'users'  => $users
+        ]);
+    }
+
+    public function approveAnggota(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Pengguna::find($id);
+                $student->status = 1;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-approve');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-approve,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function rejectAnggota(Request $request, $id){
+        try {
+            DB::transaction(function() use ($request, $id) {
+                $student = Student::find($id);
+                $student->status = 2;
+                $student->save();
+            }, 5);
+            Session::flash('sukses', 'Akun pengguna berhasil di-reject');
+            return redirect()->back();
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Akun pengguna tidak berhasil di-reject,'.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+
     public function showCreateInfo(Request $request) {
         return view('admin.dashboard.informasi.create-info', [
             'nama' => $request->session()->get('nama'),
@@ -199,6 +313,7 @@ class AdminController extends Controller
                     'nama_alat' => $request->input('nama'),
                     'harga_sewa' => $request->input('harga'),
                     'status_barang' => $request->input('status'),
+                    'id_admin'  => $request->session()->get('id'),
                     'gambar' => $filename,
                     'created_at' => Carbon::now()->toRfc2822String(),
                     'updated_at' => Carbon::now()->toRfc2822String()
@@ -215,10 +330,11 @@ class AdminController extends Controller
 
     public function listStuff(Request $request)
     {
-        $infos = AlatBarang::paginate(10);
+        $alats = AlatBarang::join('admin','admin.id', 'alat.id_admin')
+        ->select('alat.*','admin.nama as nama_admin')->paginate(10);
         return view('admin.dashboard.alatbarang.list-alat-barang', [
             'nama' => $request->session()->get('nama'),
-            'infos'  => $infos
+            'alats'  => $alats
         ]);
     }
 }
