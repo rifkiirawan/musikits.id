@@ -33,9 +33,15 @@ class AdminController extends Controller
 
     public function showHome(Request $request) {
         $allAdmin = Admin::all();
+        $allPendingStudio = Sewa_Studio::where('status','=','0');
+        $allPendingAlat = Sewa_Alat::where('status','=','0');
+        $allPendingUsers = Pengguna::where('status','=','0');
         return view('admin.dashboard.home', [
             'nama' => $request->session()->get('nama'),
-            'admin_total' => $allAdmin->count()
+            'admin_total' => $allAdmin->count(),
+            'studio_total' => $allPendingStudio->count(),
+            'alat_total' => $allPendingAlat->count(),
+            'pengguna_total' => $allPendingUsers->count()
         ]);
 
     }

@@ -12,7 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
       events: eventRoute,
       displayEventEnd: true,
       eventDisplay: 'auto',
+      eventDidMount: function(info) {
+        var tooltip = new Tooltip(info.el, {
+          title: info.event.title,
+          placement: 'top',
+          trigger: 'hover',
+          container: 'body'
+        });
+      },
       dayMaxEvents: true, // allow "more" link when too many events
     });
+
     calendar.render();
   });
+

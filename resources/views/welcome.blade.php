@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{{ config('app.name') }}</title>
+        <title>UKM Musik ITS</title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -73,12 +73,12 @@
                             <p class="text-white-50">
                                 Untuk melakukan persewaan studio maupun alat musik, anda harus memiliki akun musikits.id. Apabila anda
                                 tidak memiliki akun musikits.id, anda bisa
-                                <a href="{{ route("registerUmum") }}">daftar akun sekarang.</a>
+                                <a href="{{ route('registerUmum') }}">daftar akun sekarang.</a>
                             </p>
                         @endif
                         {{-- TODO: Tambahin href sewa studio sama alat musik --}}
                         <a class="btn btn-primary" href="{{ route('sewa.studio.index') }}">Studio </a>
-                        <a class="btn btn-secondary" href="">Alat Musik </a>
+                        <a class="btn btn-secondary" href="{{ route('sewa.alat.index') }}">Alat Musik </a>
                     </div>
                 </div>
                 <img class="img-fluid" src="{{ asset('homepage/assets/img/carousel.png') }}" alt="" />

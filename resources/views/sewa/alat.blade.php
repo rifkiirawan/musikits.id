@@ -14,6 +14,7 @@
 
 	<!-- Bootstrap -->
     {{-- <link type="text/css" rel="stylesheet" href="{{ asset('sewa') }}/css/bootstrap.min.css" /> --}}
+
     <link href="{{ asset('homepage/css/styles.css') }}" rel="stylesheet" />
 
 	<!-- Custom stlylesheet -->
@@ -22,6 +23,8 @@
 
     <script src="{{ asset('fullcalendar/main.js') }}"></script>
     <script src="{{ asset('sewa') }}/js/sewa.js"></script>
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+    <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
     <style>
         #calendar {
             max-width: 90%;
@@ -29,6 +32,9 @@
             background-color: white;
             padding: 3% 3% 3% 3%;
             font-size: 10px;
+        }
+        .tooltip{
+            position: absolute; will-change: transform; visibility: hidden; top: 0px; left: 0px; transform: translate3d(846px, 229px, 0px);
         }
     </style>
 </head>
@@ -74,7 +80,14 @@
                                 anda dapat lihat di sini.
                             </p>
                             {{-- TODO: Route buat get data kalender sewa alat --}}
-                            <input id="calendarData" data-eventroute="{{route('calendar.event')}}" type="hidden">
+                            {{--<span class="form-label">Cek Jadwal Ketersediaan Alat</span>
+                                    <select class="form-control" name="id_alat" required>
+                                        <option selected>Pilih disini</option>
+                                        @foreach ($alats as $id => $nama_alat)
+                                            <option value="{{ $id }}">{{ $nama_alat }}</option>
+                                        @endforeach
+                            </select>--}}
+                            <input id="calendarData" data-eventroute="{{route('calendar.alat.event')}}" type="hidden">
                             <div id="calendar"></div>
 						</div>
 					</div>

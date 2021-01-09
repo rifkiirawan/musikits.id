@@ -85,6 +85,7 @@ Route::get('/admin/dashboard/list-stuff-booking', [AdminController::class, 'list
 
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
+Route::get('calendar/data/alat', [PageController::class, 'getEventsAlat'])->name('calendar.alat.event');
 
 
 // Route Register dan Login
