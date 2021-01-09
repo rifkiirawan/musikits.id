@@ -77,7 +77,7 @@
                             </p>
                         @endif
                         {{-- TODO: Tambahin href sewa studio sama alat musik --}}
-                        <a class="btn btn-primary" href="">Studio </a>
+                        <a class="btn btn-primary" href="{{ route('sewa.studio.index') }}">Studio </a>
                         <a class="btn btn-secondary" href="">Alat Musik </a>
                     </div>
                 </div>

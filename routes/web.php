@@ -82,7 +82,7 @@ Route::post('/register-umum', [PenggunaController::class, 'RegisterUmum'])->name
 Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
 Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.login');
 
-Route::group(['middleware' => ['LoginTrue']], function () {
+Route::group(['middleware' => ['LoginCheck']], function () {
     Route::get('/user/dashboard', function () {
         return view('dashboard.index');
     });
