@@ -1,6 +1,11 @@
 @extends('admin/section/app')
 @section('stylesheets')
 <style>
+.red{
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
 </style>
 @endsection
 
@@ -49,19 +54,19 @@
                     @csrf
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Nama Barang</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Nama Barang<p class="red">*</p></h6></label>
                             <input class="form-control" type="text" name="nama" placeholder="Masukkan Nama Lengkap Barang" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Harga Sewa</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Harga Sewa<p class="red">*</p></h6></label>
                             <input class="form-control" type="text" name="harga" placeholder="Masukkan Harga Sewa" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Gambar</h6></label>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Gambar<p class="red">*</p></h6></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <button type="button" id="inputGroupFileAddon03"><i class="fas fa-file-upload"></i>
@@ -76,7 +81,7 @@
                     </div>
                     <div class="form-group">
                         <div class="row px-3">
-                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Status Barang: </h6></label><br>
+                            <label class="mb-1"> <h6 class="mb-0 text-sm text-bold">Status Barang: <p class="red">*</p></h6></label><br>
                             <input class="form-control" type="text" id="status" name="status" value="{{ old('status') }}" placeholder="Status Barang" required autofocus readonly>
                             <div class="dropdown">
                               <div class="btn btn-primary mb-2 mt-2" type="button" data-toggle="dropdown">Pilih Status Barang
