@@ -16,96 +16,60 @@
 	<link type="text/css" rel="stylesheet" href="{{ asset('sewa') }}/css/bootstrap.min.css" />
 
 	<!-- Custom stlylesheet -->
-	<link type="text/css" rel="stylesheet" href="{{ asset('sewa') }}/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('sewa') }}/css/style.css" />
+    <link href="{{ asset('fullcalendar/main.css') }}" rel='stylesheet' />
 
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
+    <script src="{{ asset('fullcalendar/main.js') }}"></script>
+    <script src="{{ asset('sewa') }}/js/sewa.js"></script>
+    <style>
+        #calendar {
+            max-width: 80%;
+            /* margin: 0 auto; */
+            background-color: white;
+            padding: 3% 3% 3% 3%;
+            font-size: 10px;
+        }
+    </style>
 </head>
 
 <body>
+
 	<div id="booking" class="section">
 		<div class="section-center">
 			<div class="container">
-				<div class="row">
+				<div class="row align-items-center">
 					<div class="col-md-7 col-md-push-5">
 						<div class="booking-cta">
 							<h1>Sewa Studio</h1>
 							<p>Silakan isi form ini apabila anda ingin menyewa studio. Untuk jadwal ketersediaannya
                                 anda dapat lihat di sini.
-							</p>
+                            </p>
+                            <input id="calendarData" data-eventroute="{{route('calendar.event')}}" type="hidden">
+                            <div id="calendar"></div>
 						</div>
 					</div>
 					<div class="col-md-4 col-md-pull-7">
 						<div class="booking-form">
 							<form>
-								<div class="form-group">
-									<span class="form-label">Your Destination</span>
-									<input class="form-control" type="text" placeholder="Enter a destination or hotel name">
-								</div>
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Check In</span>
-											<input class="form-control" type="date" required>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Check out</span>
-											<input class="form-control" type="date" required>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-sm-4">
-										<div class="form-group">
-											<span class="form-label">Rooms</span>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-											</select>
-											<span class="select-arrow"></span>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="form-group">
-											<span class="form-label">Adults</span>
-											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-											</select>
-											<span class="select-arrow"></span>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="form-group">
-											<span class="form-label">Children</span>
-											<select class="form-control">
-												<option>0</option>
-												<option>1</option>
-												<option>2</option>
-											</select>
-											<span class="select-arrow"></span>
-										</div>
-									</div>
-								</div>
+                                <div class="form-group">
+                                    <span class="form-label">Mulai</span>
+                                    <input class="form-control" type="datetime-local" required>
+                                </div>
+                                <div class="form-group">
+                                    <span class="form-label">Selesai
+                                    </span>
+                                    <input class="form-control" type="datetime-local" required>
+                                </div>
 								<div class="form-btn">
-									<button class="submit-btn">Check availability</button>
+									<button class="submit-btn">Ajukan Sewa</button>
 								</div>
 							</form>
 						</div>
 					</div>
-				</div>
+                </div>
 			</div>
 		</div>
-	</div>
+    </div>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>
