@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Sewa Studio - {{ config('app.name') }}</title>
+	<title>Sewa Alat - {{ config('app.name') }}</title>
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
@@ -93,7 +93,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <span class="form-label">Alat Musik yang ingin disewa</span>
-                                    <select class="form-control" required>
+                                    <select class="form-control" name="id_alat" required>
                                         <option selected>Pilih disini</option>
                                         @foreach ($alats as $id => $nama_alat)
                                             <option value="{{ $id }}">{{ $nama_alat }}</option>

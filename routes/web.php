@@ -76,6 +76,13 @@ Route::put('/admin/dashboard/list-new-studio-booking/d/{id}', [AdminController::
 Route::get('/admin/dashboard/list-studio-booking', [AdminController::class, 'listStudioBooking'])->name('list-booking-studio')->middleware('AdminCheck');
 Route::get('/admin/dashboard/calendar-studio-booking', [AdminController::class, 'calendarStudioBooking'])->name('calendar-booking-studio')->middleware('AdminCheck');
 
+Route::get('/admin/dashboard/list-new-stuff-booking', [AdminController::class, 'listNewStuffBooking'])->name('list-new-booking-stuff')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-stuff-booking/a/{id}', [AdminController::class, 'approveStuffBooking'])->name('booking.stuff.approve')->middleware('AdminCheck');
+Route::put('/admin/dashboard/list-new-stuff-booking/d/{id}', [AdminController::class, 'rejectStuffBooking'])->name('booking.stuff.reject')->middleware('AdminCheck');
+
+Route::get('/admin/dashboard/list-stuff-booking', [AdminController::class, 'listStuffBooking'])->name('list-booking-stuff')->middleware('AdminCheck');
+// Route::get('/admin/dashboard/calendar-stuff-booking', [AdminController::class, 'calendarStudioBooking'])->name('calendar-booking-studio')->middleware('AdminCheck');
+
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
 
