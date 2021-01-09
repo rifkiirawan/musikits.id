@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AlatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PenggunaController;
@@ -94,6 +95,9 @@ Route::group(['middleware' => ['LoginCheck']], function () {
 
     Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
     Route::post('/sewa-studio', [StudioController::class, 'store'])->name('sewa.studio.store');
+
+    Route::get('/sewa-alat', [AlatController::class, 'index'])->name('sewa.alat.index');
+    Route::post('/sewa-alat', [AlatController::class, 'store'])->name('sewa.alat.store');
 });
 
 Route::group(['prefix' => 'artikels'], function () {
