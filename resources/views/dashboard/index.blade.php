@@ -96,7 +96,7 @@
                                             <h6 tabindex="-1" class="dropdown-header">Selamat Datang!</h6>
                                             <div tabindex="-1" class="dropdown-divider"></div>
                                             {{-- TODO: Route logout --}}
-                                            <button type="button" tabindex="0" class="dropdown-item">Log out</button>
+                                            <a href="{{ route('user/logout') }}"class="dropdown-item">Log out</a>
                                         </div>
                                     </div>
                                 </div>
