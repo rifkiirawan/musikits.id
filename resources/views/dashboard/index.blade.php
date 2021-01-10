@@ -462,7 +462,7 @@
                                     <li>
                                         <a href="{{ route('user.inventaris.index') }}">
                                             <i class="metismenu-icon pe-7s-musiclist"></i>
-                                            Inentaris Alat Musik
+                                            Inventaris Alat Musik
                                         </a>
                                     </li>
                                 @endif
