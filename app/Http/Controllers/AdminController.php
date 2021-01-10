@@ -435,7 +435,7 @@ class AdminController extends Controller
 
     public function listStuff(Request $request)
     {
-        $alats = AlatBarang::join('admin','admin.id', 'alat.id_admin')
+        $alats = AlatBarang::leftjoin('admin','admin.id', 'alat.id_admin')
         ->select('alat.*','admin.nama as nama_admin')->paginate(10);
         return view('admin.dashboard.alatbarang.list-alat-barang', [
             'nama' => $request->session()->get('nama'),
@@ -728,5 +728,9 @@ class AdminController extends Controller
             return redirect()->back();
         }
     }
-
+    public function calendarStuffBooking(Request $request){
+        return view('admin/dashboard/sewa_alat/calendar', [
+            'nama' => $request->session()->get('nama'),
+        ]);
+    }
 }

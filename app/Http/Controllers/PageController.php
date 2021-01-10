@@ -47,7 +47,7 @@ class PageController extends Controller
 
     }
 
-    function randomcolor($id)
+    protected function randomcolor($id)
     {
         $y = intval($id);
         $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
@@ -59,15 +59,22 @@ class PageController extends Controller
         return $color;
     }
 
+    function cekWarna()
+    {
+        $y = $this->randomcolor(4);
+        dd($y);
+    }
+
     function getEventsAlat(Request $request) {
         $bookings = Sewa_Alat::join('pengguna','pengguna.id','peminjaman.id_pengguna')
         ->join('alat','alat.id','peminjaman.id_alat')
         ->where('peminjaman.status','=','1')
-        ->get(['waktu_mulai as start','waktu_selesai as end', 'alat.nama_alat as title', 'alat.id as id']);
+        ->get(['waktu_mulai as start','waktu_selesai as end', 'alat.nama_alat as title', 'alat.id as alat_id', 'pengguna.nama_pengguna as nama']);
         foreach ($bookings as $booking)
         {
             // Force timezone to Asia/Jakarta
-            $booking['color'] = "#ff0000";
+            $booking['title'] = $booking['title'].' - '.$booking['nama'];
+            $booking['color'] = $this->randomcolor($booking['alat_id']);;
             $booking['textColor'] = "#000000";
         }
         echo json_encode($bookings);

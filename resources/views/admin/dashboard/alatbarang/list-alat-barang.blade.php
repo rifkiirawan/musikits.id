@@ -82,7 +82,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body" style="display: block;">
-                                                <img src="{{asset('Data/AlatBarang/').'/'.$alat->gambar}}" width="100%" height="auto" frameborder="0" style="margin-left: auto; margin-right: auto; display:block;"></img>
+                                                <img src="{{asset('Data/AlatBarang/').'/'.$alat->gambar}}" alt=" Belum ada gambar, silahkan tambah gambar melalui menu edit" width="100%" height="auto" frameborder="0" style="margin-left: auto; margin-right: auto; display:block;"></img>
                                         </div>
                                         <div class="modal-footer justify-content-between">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -209,13 +209,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                    {{ $alats->links() }}
-                    {{-- <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li> --}}
+                <ul class="pagination pagination-sm m-0">
+                    {{ $alats->links("pagination::bootstrap-4") }}
                 </ul>
             </div>
         </div>

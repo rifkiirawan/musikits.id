@@ -81,11 +81,13 @@ Route::put('/admin/dashboard/list-new-stuff-booking/a/{id}', [AdminController::c
 Route::put('/admin/dashboard/list-new-stuff-booking/d/{id}', [AdminController::class, 'rejectStuffBooking'])->name('booking.stuff.reject')->middleware('AdminCheck');
 
 Route::get('/admin/dashboard/list-stuff-booking', [AdminController::class, 'listStuffBooking'])->name('list-booking-stuff')->middleware('AdminCheck');
-// Route::get('/admin/dashboard/calendar-stuff-booking', [AdminController::class, 'calendarStudioBooking'])->name('calendar-booking-studio')->middleware('AdminCheck');
+Route::get('/admin/dashboard/calendar-stuff-booking', [AdminController::class, 'calendarStuffBooking'])->name('calendar-booking-stuff')->middleware('AdminCheck');
 
 Route::get('calendar', [PageController::class, 'showSewaStudio'])->name('sewa.studio.calendar');
 Route::get('calendar/data', [PageController::class, 'getEvents'])->name('calendar.event');
 Route::get('calendar/data/alat', [PageController::class, 'getEventsAlat'])->name('calendar.alat.event');
+
+Route::get('www', [PageController::class, 'cekWarna'])->name('calendar.alat.warna');
 
 
 // Route Register dan Login

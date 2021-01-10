@@ -271,16 +271,16 @@
                   <p>Verifikasi Sewa Alat</p>
                 </a>
               </li>
-              {{--<li class="nav-item ml-4">
-                <a href="{{route('calendar-booking-studio')}}" class="nav-link">
-                  @if (request()->path() == 'admin/dashboard/calendar-studio-booking')
+              <li class="nav-item ml-4">
+                <a href="{{route('calendar-booking-stuff')}}" class="nav-link">
+                  @if (request()->path() == 'admin/dashboard/calendar-stuff-booking')
                     <i class="fas fa-circle nav-icon text-info"></i>
                   @else
                     <i class="far fa-circle nav-icon"></i>
                   @endif
-                  <p>Kalender Sewa Studio</p>
+                  <p>Kalender Sewa Alat</p>
                 </a>
-              </li>--}}
+              </li>
             </ul>
           </li>
         </ul>
