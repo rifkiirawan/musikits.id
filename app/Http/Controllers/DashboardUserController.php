@@ -20,9 +20,34 @@ use Illuminate\Support\Facades\Log;
 use App\Models\AlatBarang;
 use App\Models\Sewa_Studio;
 use App\Models\Sewa_Alat;
+use DateTime;
 
 class DashboardUserController extends Controller
 {
+    public function index(Request $request)
+    {
+        // query sewa alat
+        $alats =  DB::table('peminjaman')
+        ->join('pengguna','pengguna.id','peminjaman.id_pengguna')
+        ->join('alat','alat.id','peminjaman.id_alat')
+        ->select('peminjaman.*', 'alat.nama_alat')
+        ->where('pengguna.id', '=', $request->session()->get('id'))
+        ->orderBy('updated_at')
+        ->paginate(5);
+
+        // query sewa studio
+        $studios =  DB::table('sewa_studio')
+        ->join('pengguna','pengguna.id','sewa_studio.id_pengguna')
+        ->select('sewa_studio.*')
+        ->where('pengguna.id', '=', $request->session()->get('id'))
+        ->orderBy('updated_at')
+        ->paginate(5);
+
+        $user = Pengguna::find($request->session()->get('id'));
+
+        return view('dashboard.index', compact('user', 'alats', 'studios'));
+    }
+
     public function listStudioBooking(Request $request){
         $bookings =  DB::table('sewa_studio')
         ->join('pengguna','pengguna.id','sewa_studio.id_pengguna')
@@ -82,5 +107,4 @@ class DashboardUserController extends Controller
             'inventaris' => $inventaris
         ]);
     }
-
 }

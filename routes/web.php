@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\StudioController;
 
 /*
@@ -98,10 +99,9 @@ Route::post('/register-umum', [PenggunaController::class, 'RegisterUmum'])->name
 Route::get('/login-account', [PenggunaController::class, 'showLoginForm'])->name('login');
 Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.login');
 
+// Route User
 Route::group(['middleware' => ['LoginCheck']], function () {
-    Route::get('/user/dashboard', function () {
-        return view('dashboard.index');
-    });
+    Route::get('/user/dashboard', [DashboardUserController::class, 'index'])->name('user.index');
 
     Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
     Route::post('/sewa-studio', [StudioController::class, 'store'])->name('sewa.studio.store');

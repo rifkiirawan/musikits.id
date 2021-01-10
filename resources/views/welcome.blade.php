@@ -30,8 +30,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#artikel">Artikel</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#hubungi-kami">Hubungi Kami</a></li>
                         @if (Session::has('login'))
-                            {{-- TODO: Nambah route ke profil anda --}}
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="">Profil Anda</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('user.index') }}">Profil Anda</a></li>
                             @if (Session::has('role'))
                                 @if(Session::get('role') == "admin")
                                     <li class="nav-item"><a class="nav-link js-scroll-trigger font-weight-bold text-white bg-primary" href="{{ route('admin/logout') }}">Keluar</a></li>

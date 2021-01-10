@@ -88,25 +88,24 @@
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left">
                                     <div class="btn-group">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="{{ asset('dashboard') }}/assets/images/avatars/1.jpg" alt="">
-                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                        </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                             <h6 tabindex="-1" class="dropdown-header">Selamat Datang!</h6>
                                             <div tabindex="-1" class="dropdown-divider"></div>
-                                            {{-- TODO: Route logout --}}
                                             <a href="{{ route('user/logout') }}"class="dropdown-item">Log out</a>
                                         </div>
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <i class="fas fa-user-circle fa-lg"></i>
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        {{-- TODO: Query nama --}}
-                                        Irsyadhani Dwi Subhi
+                                        {{ $user['nama_pengguna'] }}
                                     </div>
                                     <div class="widget-subheading">
-                                        Project Manager
+                                        {{ $user['role'] }}
                                     </div>
                                 </div>
                             </div>
@@ -438,15 +437,14 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            {{-- TODO: Route ke sewa alat musik --}}
-                                            <a href="">
+                                            <a href="{{ route('sewa.alat.index') }}">
                                                 <i class="metismenu-icon"></i>
                                                 Alat Musik
                                             </a>
                                         </li>
                                         <li>
                                             {{-- TODO: Route ke sewa studio --}}
-                                            <a href="">
+                                            <a href="{{ route('sewa.studio.index') }}">
                                                 <i class="metismenu-icon">
                                                 </i>Studio
                                             </a>
@@ -516,136 +514,142 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- TABEL ALAT MUSIK --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
-                                    <div class="card-header">Status Persewaan
-                                        <div class="btn-actions-pane-right">
-                                            {{-- TODO: Ganti tampilan tabel kalau dipencet --}}
-                                            <div role="group" class="btn-group-sm btn-group">
-                                                <button class="active btn btn-focus">Alat Musik</button>
-                                                <button class="btn btn-focus">Studio</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="card-header">Alat Musik</div>
                                     <div class="table-responsive">
                                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                             <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
                                                 <th>Tipe</th>
-                                                <th class="text-center">Harga</th>
+                                                <th class="text-center">Mulai</th>
+                                                <th class="text-center">Selesai</th>
                                                 <th class="text-center">Status</th>
-                                                <th class="text-center">Aksi</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {{-- TODO: Query tabel persewaan --}}
-                                            <tr>
-                                                <td class="text-center text-muted">#1</td>
-                                                <td>
-                                                    <div class="widget-content p-0">
-                                                        <div class="widget-content-wrapper">
-                                                            <div class="widget-content-left mr-3">
-                                                                <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
+                                            @forelse ($alats as $alat)
+                                                <tr>
+                                                    <?php
+                                                        $waktuMulai = $alat->waktu_mulai;
+                                                        $waktuSelesai = $alat->waktu_selesai;
+
+                                                        $mulai = new DateTime($waktuMulai);
+                                                        $selesai = new DateTime($waktuSelesai);
+
+                                                        $interval = $mulai->diff($selesai);
+                                                        $hari = $interval->format('%a');
+
+                                                        // echo $hari
+                                                    ?>
+                                                    <td class="text-center text-muted">#{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">{{ $alat->nama_alat }}</div>
+                                                                    <div class="widget-subheading opacity-7">{{ $hari }} Hari</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="widget-content-left flex2">
-                                                                <div class="widget-heading">Gitar Listrik, Cajoon</div>
-                                                                <div class="widget-subheading opacity-7">3 hari</div>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">Madrid</td>
-                                                <td class="text-center">
-                                                    <div class="badge badge-warning">Pending</div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center text-muted">#347</td>
-                                                <td>
-                                                    <div class="widget-content p-0">
-                                                        <div class="widget-content-wrapper">
-                                                            <div class="widget-content-left mr-3">
-                                                                <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/3.jpg" alt="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="widget-content-left flex2">
-                                                                <div class="widget-heading">Ruben Tillman</div>
-                                                                <div class="widget-subheading opacity-7">Etiam sit amet orci eget</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">Berlin</td>
-                                                <td class="text-center">
-                                                    <div class="badge badge-success">Completed</div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" id="PopoverCustomT-2" class="btn btn-primary btn-sm">Details</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center text-muted">#321</td>
-                                                <td>
-                                                    <div class="widget-content p-0">
-                                                        <div class="widget-content-wrapper">
-                                                            <div class="widget-content-left mr-3">
-                                                                <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/2.jpg" alt="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="widget-content-left flex2">
-                                                                <div class="widget-heading">Elliot Huber</div>
-                                                                <div class="widget-subheading opacity-7">Lorem ipsum dolor sic</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">London</td>
-                                                <td class="text-center">
-                                                    <div class="badge badge-danger">In Progress</div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" id="PopoverCustomT-3" class="btn btn-primary btn-sm">Details</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center text-muted">#55</td>
-                                                <td>
-                                                    <div class="widget-content p-0">
-                                                        <div class="widget-content-wrapper">
-                                                            <div class="widget-content-left mr-3">
-                                                                <div class="widget-content-left">
-                                                                    <img width="40" class="rounded-circle" src="assets/images/avatars/1.jpg" alt=""></div>
-                                                            </div>
-                                                            <div class="widget-content-left flex2">
-                                                                <div class="widget-heading">Vinnie Wagstaff</div>
-                                                                <div class="widget-subheading opacity-7">UI Designer</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">Amsterdam</td>
-                                                <td class="text-center">
-                                                    <div class="badge badge-info">On Hold</div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">Details</button>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="text-center">{{ $alat->waktu_mulai }}</td>
+                                                    <td class="text-center">{{ $alat->waktu_selesai }}</td>
+                                                    @if ($alat->status == 0)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-warning">Pending</div>
+                                                        </td>
+                                                    @elseif($alat->status == 1)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-success">Sukses</div>
+                                                        </td>
+                                                    @elseif($alat->status == 2)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-danger">Ditolak</div>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @empty
+                                                <td>Anda belum melakukan peminjaman alat musik</td>
+                                            @endforelse
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {{-- TABEL STUDIO --}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">Studio</div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th>Tipe</th>
+                                                <th class="text-center">Mulai</th>
+                                                <th class="text-center">Selesai</th>
+                                                <th class="text-center">Status</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @forelse ($studios as $studio)
+                                                <tr>
+                                                    <?php
+                                                        $waktuMulai = $studio->waktu_mulai;
+                                                        $waktuSelesai = $studio->waktu_selesai;
+
+                                                        $mulai = new DateTime($waktuMulai);
+                                                        $selesai = new DateTime($waktuSelesai);
+
+                                                        $interval = $mulai->diff($selesai);
+                                                        $hari = $interval->format('%a');
+
+                                                    ?>
+                                                    <td class="text-center text-muted">#{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    {{-- <div class="widget-heading">{{ $studio->nama_alat }}</div> --}}
+                                                                    <div class="widget-subheading opacity-7">{{ $hari }} Hari</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">{{ $studio->waktu_mulai }}</td>
+                                                    <td class="text-center">{{ $studio->waktu_selesai }}</td>
+                                                    @if ($studio->status == 0)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-warning">Pending</div>
+                                                        </td>
+                                                    @elseif($studio->status == 1)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-success">Sukses</div>
+                                                        </td>
+                                                    @elseif($studio->status == 2)
+                                                        <td class="text-center">
+                                                            <div class="badge badge-danger">Ditolak</div>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @empty
+                                                <td>Anda belum melakukan peminjaman alat musik</td>
+                                            @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="app-wrapper-footer">
                         <div class="app-footer">
