@@ -428,7 +428,7 @@
 
                                 {{-- Dashboard --}}
                                 <li>
-                                    <a href="{{ route('user.index') }}" class="mm-active">
+                                    <a href="{{ route('user.index') }}">
                                         <i class="metismenu-icon pe-7s-rocket"></i>
                                         Dashboard
                                     </a>
@@ -460,7 +460,7 @@
                                 {{-- Inventaris --}}
                                 @if (Session::get('role') == "Anggota")
                                     <li>
-                                        <a href="{{ route('user.inventaris.index') }}">
+                                        <a href="{{ route('user.index') }}" class="mm-active">
                                             <i class="metismenu-icon pe-7s-musiclist"></i>
                                             Inentaris Alat Musik
                                         </a>
@@ -478,118 +478,51 @@
                                         <i class="pe-7s-help1 icon-gradient bg-mean-fruit">
                                         </i>
                                     </div>
-                                    <div>Dashboard Anda
-                                        <div class="page-title-subheading">Anda dapat melihat status dari persewaan terbaru anda disini.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-ripe-malin">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">Total Ditolak </div>
-                                            <div class="widget-subheading">Alat Musik dan Studio</div>
-                                        </div>
-                                        {{-- TODO: Query total ditolak --}}
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>2</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="card mb-3 widget-content bg-sunny-morning">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">Total Pending</div>
-                                            <div class="widget-subheading">Alat Musik dan Studio</div>
-                                        </div>
-                                        {{-- TODO: Query total pending --}}
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>3</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-xl-4">
-                                <div class="card mb-3 widget-content bg-grow-early">
-                                    <div class="widget-content-wrapper text-white">
-                                        <div class="widget-content-left">
-                                            <div class="widget-heading">Total Diterima</div>
-                                            <div class="widget-subheading">Alat Musik dan Studio</div>
-                                        </div>
-                                        {{-- TODO: Query total diterima --}}
-                                        <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>46</span></div>
+                                    <div>Inventaris Alat Musik
+                                        <div class="page-title-subheading">Anda dapat melihat daftar alat musik yang ada di UKM Musik ITS
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- TABEL ALAT MUSIK --}}
+                        {{-- TABEL INVENTARIS --}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="main-card mb-3 card">
-                                    <div class="card-header">Alat Musik</div>
+                                    <div class="card-header">Inventaris</div>
                                     <div class="table-responsive">
                                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                                             <thead>
                                             <tr>
                                                 <th class="text-center">#</th>
-                                                <th>Tipe</th>
-                                                <th class="text-center">Mulai</th>
-                                                <th class="text-center">Selesai</th>
-                                                <th class="text-center">Status</th>
+                                                <th>ID Inventory</th>
+                                                <th class="text-center">Bulan</th>
+                                                <th class="text-center">Tahun</th>
+                                                <th class="text-center">Detail Inventaris</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @forelse ($alats as $alat)
+                                            @forelse ($inventariss as $inventaris)
                                                 <tr>
-                                                    <?php
-                                                        $waktuMulai = $alat->waktu_mulai;
-                                                        $waktuSelesai = $alat->waktu_selesai;
-
-                                                        $mulai = new DateTime($waktuMulai);
-                                                        $selesai = new DateTime($waktuSelesai);
-
-                                                        $interval = $mulai->diff($selesai);
-                                                        $hari = $interval->format('%a');
-
-                                                        // echo $hari
-                                                    ?>
                                                     <td class="text-center text-muted">#{{ $loop->iteration }}</td>
                                                     <td>
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">{{ $alat->nama_alat }}</div>
-                                                                    <div class="widget-subheading opacity-7">{{ $hari }} Hari</div>
+                                                                    <div class="widget-heading">{{ $inventaris->id }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">{{ $alat->waktu_mulai }}</td>
-                                                    <td class="text-center">{{ $alat->waktu_selesai }}</td>
-                                                    @if ($alat->status == 0)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-warning">Pending</div>
-                                                        </td>
-                                                    @elseif($alat->status == 1)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-success">Sukses</div>
-                                                        </td>
-                                                    @elseif($alat->status == 2)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-danger">Ditolak</div>
-                                                        </td>
-                                                    @endif
+                                                    <td class="text-center">{{ $inventaris->bulan }}</td>
+                                                    <td class="text-center">{{ $inventaris->tahun }}</td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-primary text-white" href="{{ route('user.inventaris.show', $inventaris->id) }}">Lihat</a>
+                                                    </td>
                                                 </tr>
                                             @empty
-                                                <td colspan="5">Anda belum melakukan peminjaman alat musik</td>
+                                                <td colspan="4">Belum ada data inventaris</td>
                                             @endforelse
                                             </tbody>
                                         </table>
@@ -597,73 +530,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- TABEL STUDIO --}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="main-card mb-3 card">
-                                    <div class="card-header">Studio</div>
-                                    <div class="table-responsive">
-                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th class="text-center">#</th>
-                                                <th>Tipe</th>
-                                                <th class="text-center">Mulai</th>
-                                                <th class="text-center">Selesai</th>
-                                                <th class="text-center">Status</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @forelse ($studios as $studio)
-                                                <tr>
-                                                    <?php
-                                                        $waktuMulai = $studio->waktu_mulai;
-                                                        $waktuSelesai = $studio->waktu_selesai;
-
-                                                        $mulai = new DateTime($waktuMulai);
-                                                        $selesai = new DateTime($waktuSelesai);
-
-                                                        $interval = $mulai->diff($selesai);
-                                                        $hari = $interval->format('%a');
-
-                                                    ?>
-                                                    <td class="text-center text-muted">#{{ $loop->iteration }}</td>
-                                                    <td>
-                                                        <div class="widget-content p-0">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">{{ $hari }} Hari</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">{{ $studio->waktu_mulai }}</td>
-                                                    <td class="text-center">{{ $studio->waktu_selesai }}</td>
-                                                    @if ($studio->status == 0)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-warning">Pending</div>
-                                                        </td>
-                                                    @elseif($studio->status == 1)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-success">Sukses</div>
-                                                        </td>
-                                                    @elseif($studio->status == 2)
-                                                        <td class="text-center">
-                                                            <div class="badge badge-danger">Ditolak</div>
-                                                        </td>
-                                                    @endif
-                                                </tr>
-                                            @empty
-                                                <td colspan="5">Anda belum melakukan persewaan studio</td>
-                                            @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                     <div class="app-wrapper-footer">
                         <div class="app-footer">

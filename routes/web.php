@@ -102,6 +102,10 @@ Route::post('/login-account', [PenggunaController::class, 'Login'])->name('post.
 // Route User
 Route::group(['middleware' => ['LoginCheck']], function () {
     Route::get('/user/dashboard', [DashboardUserController::class, 'index'])->name('user.index');
+    Route::group(['middleware' => ['AnggotaCheck']], function () {
+        Route::get('/user/dashboard/inventaris', [DashboardUserController::class, 'showListInventory'])->name('user.inventaris.index');
+        Route::get('/user/dashboard/inventaris/{id}', [DashboardUserController::class, 'showDetailInventory'])->name('user.inventaris.show');
+    });
 
     Route::get('/sewa-studio', [StudioController::class, 'index'])->name('sewa.studio.index');
     Route::post('/sewa-studio', [StudioController::class, 'store'])->name('sewa.studio.store');

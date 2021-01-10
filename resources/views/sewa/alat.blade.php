@@ -79,14 +79,6 @@
 							<p class="anjing">Silakan isi form ini apabila anda ingin menyewa alat musik. Untuk jadwal ketersediaannya
                                 anda dapat lihat di sini.
                             </p>
-                            {{-- TODO: Route buat get data kalender sewa alat --}}
-                            {{--<span class="form-label">Cek Jadwal Ketersediaan Alat</span>
-                                    <select class="form-control" name="id_alat" required>
-                                        <option selected>Pilih disini</option>
-                                        @foreach ($alats as $id => $nama_alat)
-                                            <option value="{{ $id }}">{{ $nama_alat }}</option>
-                                        @endforeach
-                            </select>--}}
                             <input id="calendarData" data-eventroute="{{route('calendar.alat.event')}}" type="hidden">
                             <div id="calendar"></div>
 						</div>
