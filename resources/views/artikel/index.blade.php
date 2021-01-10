@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Artikel - {{ config('app.name') }}</title>
+  <title>Artikel - UKM Musik ITS</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{{ asset('artikel') }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
