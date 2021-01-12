@@ -20,6 +20,7 @@ class LoginTrue
         if($request->session()->has('login')) {
             Session::flash('error', 'Anda sudah memiliki session login, silahkan logout terlebih dahulu');
             return redirect()->back();
+
         }else{
             return $next($request);
         }
