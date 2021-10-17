@@ -48,43 +48,29 @@ class AdminController extends Controller
 
     // login admin
     public function Login(Request $request) {
-
         $admin = Admin::where('email', '=', $request->input('email'))->first();
-        if($admin) {
-            if(Hash::check($request->input('password'), $admin->password)) {
 
-                $request->session()->put([
-                    'login'     => true,
-                    'nama'      => $admin->nama,
-                    'id'        => $admin->id,
-                    'email'     => $admin->email,
-                    'role'      => 'admin',
-                    'mobile_no' => $admin->mobile_no,
-                ]);
-
-                Session::flash('success', 'Anda berhasil Login');
-                return redirect('/admin/dashboard');
-            }else{
-                // password salah
-                Session::flash('error', 'Salah Password');
-                return redirect('/admin-login');
-            }
-        }else{
-            // admin tidak ditemukan
+        if(!$admin) {
             Session::flash('error', 'User tidak dapat ditemukan');
             return redirect('/admin-login');
         }
 
-    }
+        if (Hash::check($request->input('password'), $admin->password) != false) {
+            Session::flash('error', 'Salah Password');
+            return redirect('/admin-login');
+        }
 
-    // menampilkan form register admin
-    public function showRegister(Request $request) {
-
-        return view('admin.dashboard.admin.register-admin', [
-            'nama' => $request->session()->get('nama')
+        $request->session()->put([
+            'login'     => true,
+            'nama'      => $admin->nama,
+            'id'        => $admin->id,
+            'email'     => $admin->email,
+            'role'      => 'admin',
+            'mobile_no' => $admin->mobile_no,
         ]);
 
-
+        Session::flash('success', 'Anda berhasil Login');
+        return redirect('/admin/dashboard');
     }
 
     // mendaftarkan admin
@@ -443,6 +429,38 @@ class AdminController extends Controller
         ]);
     }
 
+    public function generateStuffImageFilename(Request $request){
+        $berkas = $request->file('gambar');
+        $nama = $request->input('nama');
+        $ext = $berkas->getClientOriginalExtension();
+        $current = Carbon::now()->format('YmdHs');
+        $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
+
+        return $filename;
+    }
+
+    public function updateStuffImage(Request $request, $gambarbaru, $gambarlama, $tujuan) {
+        try {
+            DB::transaction(function() use ($request, $filename) {
+                AlatBarang::where([
+                    'id' => $request->input('id_alat')
+                ])->update([
+                    'gambar'    => $filename,
+                    'updated_at' => Carbon::now()
+                ]);
+            }, 5);
+
+            if(\File::exists(public_path($gambarlama)))
+            {
+                \File::delete(public_path($gambarlama));  // or unlink($filename);
+            }
+            $berkas->move($tujuan, $filename);
+        } catch(Exception $e) {
+            Session::flash('gagal', 'Gambar Barang gagal diupdate, '.$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
     public function updateStuff(Request $request){
         $validator = Validator::make($request->all(), [
             'id_alat'       => 'required',
@@ -456,61 +474,30 @@ class AdminController extends Controller
             Session::flash('gagal', $validator->errors());
             return redirect()->back()->withInput();
         }
+        
         try {
-
             $alat = AlatBarang::find($request->input('id_alat'));
-            $filename = null;
-            if( $request->file('gambar') != null)
-            {
-                $berkas = $request->file('gambar');
-                $nama = $request->input('nama');
-                $ext = $berkas->getClientOriginalExtension();
-                $current = Carbon::now()->format('YmdHs');
-                $filename = $nama.'_'.$current.'_'.'Gambar'.'.'.$ext;
-            }else{
-                $filename = '';
-            }
-            // dd($filename);
-            $gambarlama = 'Data/AlatBarang/'.$alat->gambar;
-            $tujuan = 'Data/AlatBarang';
 
+            DB::transaction(function() use ($request) {
+                AlatBarang::where([
+                    'id' => $request->input('id_alat')
+                ])->update([
+                    'nama_alat' => $request->input('nama'),
+                    'harga_sewa' => $request->input('harga'),
+                    'status_barang' => $request->input('status'),
+                    'updated_at' => Carbon::now()
+                ]);
+            }, 5);
 
-            if($request->file('gambar') === null)
-            {
-                DB::transaction(function() use ($request) {
-                    AlatBarang::where([
-                        'id' => $request->input('id_alat')
-                    ])->update([
-                        'nama_alat' => $request->input('nama'),
-                        'harga_sewa' => $request->input('harga'),
-                        'status_barang' => $request->input('status'),
-                        'updated_at' => Carbon::now()
-                    ]);
-                }, 5);
-                Session::flash('sukses', 'Alat Barang berhasil diupdate');
-                return redirect()->back();
+            if( $request->file('gambar') != null) {
+                $gambarbaru = generateStuffImageFilename($request);
+                $gambarlama = 'Data/AlatBarang/'.$alat->gambar;
+                $tujuan = 'Data/AlatBarang';
+                updateStuffImage($request, $gambarbaru, $gambarlama, $tujuan);
             }
-            else
-            {
-                DB::transaction(function() use ($request, $filename) {
-                    AlatBarang::where([
-                        'id' => $request->input('id_alat')
-                    ])->update([
-                        'nama_alat' => $request->input('nama'),
-                        'harga_sewa' => $request->input('harga'),
-                        'status_barang' => $request->input('status'),
-                        'gambar'    => $filename,
-                        'updated_at' => Carbon::now()
-                    ]);
-                }, 5);
-                if(\File::exists(public_path($gambarlama)))
-                {
-                    \File::delete(public_path($gambarlama));  // or unlink($filename);
-                }
-                $berkas->move($tujuan, $filename);
-                Session::flash('sukses', 'Alat Barang berhasil diupdate');
-                return redirect()->back();
-            }
+            
+            Session::flash('sukses', 'Alat Barang berhasil diupdate');
+            return redirect()->back();
         }
         catch(Exception $e) {
             Session::flash('gagal', 'Alat Barang gagal diupdate, '.$e->getMessage());
@@ -701,7 +688,7 @@ class AdminController extends Controller
 
     public function approveStuffBooking(Request $request, $id){
         try {
-            DB::transaction(function() use ($request, $id) {
+            DB::transaction(function() use ($id) {
                 $booking = Sewa_Alat::find($id);
                 $booking->status = 1;
                 $booking->save();
