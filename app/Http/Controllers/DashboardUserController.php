@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\AlatBarang;
-use App\Models\Sewa_Studio;
-use App\Models\Sewa_Alat;
-use DateTime;
 
 class DashboardUserController extends Controller
 {
