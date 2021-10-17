@@ -37,41 +37,27 @@ class PenggunaController extends Controller
     {
         $pengguna = Pengguna::where('email' ,'=', $request->input('email'))->first();
 
-        if ($pengguna)
-        {
-            if($pengguna->status == 1)
-            {
-                if (Hash::check($request->input('password'), $pengguna->password))
-                {
-                    $request->session()->put([
-                        'login' => true,
-                        'id' => $pengguna->id,
-                        'nama' => $pengguna->nama,
-                        'email' => $pengguna->email,
-                        'role' => $pengguna->role,
-                    ]);
-		    //dd($request->session());
-                    Session::flash('success', 'Anda berhasil Login');
-                    return redirect('/');
-                }else
-                {
-                    Session::flash('error', 'Password tidak cocok');
-                    return redirect()->route('registerUmum');
-                }
-            }
-            else if($pengguna->status == 0)
-            {
-                Session::flash('error', 'Akun anda belum divalidasi');
-                return redirect()->route('registerUmum');
-            }
-            else
-            {
-                Session::flash('error', 'Akun tidak ditemukan');
-                return redirect()->route('registerUmum');
-            }
+        if (!$pengguna) {
+            Session::flash('error', 'Anda belum mempunyai akun, silahkan register terlebih dahulu');
+            return redirect()->route('registerUmum');
         }
-        Session::flash('error', 'Anda belum mempunyai akun, silahkan register terlebih dahulu');
+        if ($pengguna->$status == 0){
+            Session::flash('error', 'Akun anda belum divalidasi');
+            return redirect()->route('registerUmum');
+        }
+        if (Hash::check($request->input('password'), $pengguna->password) != false) {
+        Session::flash('error', 'Password tidak cocok');
         return redirect()->route('registerUmum');
+        }
+        $request->session()->put([
+            'login' => true,
+            'id' => $pengguna->id,
+            'nama' => $pengguna->nama,
+            'email' => $pengguna->email,
+            'role' => $pengguna->role,
+        ]);
+        Session::flash('success', 'Anda berhasil Login');
+        return redirect('/');
     }
 
     public function RegisterUmum(Request $request)

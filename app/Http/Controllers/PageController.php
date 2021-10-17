@@ -25,15 +25,7 @@ class PageController extends Controller
         return view('page.calendar');
     }
 
-    // public function getSewaStudio()
-    // {
-    //     $sewa = DB::table('sewa_studio')
-    //         ->select('id as title','waktu_mulai as start', 'waktu_selesai as end')
-    //         ->get();
-    //     echo json_encode($sewa);
-    // }
-
-    function getEvents(Request $request) {
+    function getEvents() {
         $bookings = Sewa_Studio::join('pengguna','pengguna.id','sewa_studio.id_pengguna')
         ->where('sewa_studio.status','=','1')
         ->get(['pengguna.nama_pengguna as title','waktu_mulai as start','waktu_selesai as end']);
@@ -44,7 +36,6 @@ class PageController extends Controller
             $booking['textColor'] = "#000000";
         }
         echo json_encode($bookings);
-
     }
 
     protected function randomcolor($id)
@@ -65,7 +56,7 @@ class PageController extends Controller
         dd($y);
     }
 
-    function getEventsAlat(Request $request) {
+    function getEventsAlat() {
         $bookings = Sewa_Alat::join('pengguna','pengguna.id','peminjaman.id_pengguna')
         ->join('alat','alat.id','peminjaman.id_alat')
         ->where('peminjaman.status','=','1')
@@ -78,6 +69,5 @@ class PageController extends Controller
             $booking['textColor'] = "#000000";
         }
         echo json_encode($bookings);
-
     }
 }
