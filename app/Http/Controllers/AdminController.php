@@ -48,14 +48,14 @@ class AdminController extends Controller
 
     // login admin
     public function Login(Request $request) {
-        $admin = Admin::where('email', '=', $request->input('email'))->first();
+        $admin = Admin::where('email', $request->input('email'))->first();
 
         if(!$admin) {
             Session::flash('error', 'User tidak dapat ditemukan');
             return redirect('/admin-login');
         }
 
-        if (Hash::check($request->input('password'), $admin->password) != false) {
+        if (Hash::check($request->input('password'), $admin->password) == false) {
             Session::flash('error', 'Salah Password');
             return redirect('/admin-login');
         }

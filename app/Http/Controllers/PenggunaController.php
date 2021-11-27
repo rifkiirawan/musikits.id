@@ -41,13 +41,13 @@ class PenggunaController extends Controller
             Session::flash('error', 'Anda belum mempunyai akun, silahkan register terlebih dahulu');
             return redirect()->route('registerUmum');
         }
-        if ($pengguna->$status == 0){
+        if ($pengguna->status == 0){
             Session::flash('error', 'Akun anda belum divalidasi');
             return redirect()->route('registerUmum');
         }
-        if (Hash::check($request->input('password'), $pengguna->password) != false) {
-        Session::flash('error', 'Password tidak cocok');
-        return redirect()->route('registerUmum');
+        if (Hash::check($request->input('password'), $pengguna->password) == false) {
+            Session::flash('error', 'Password tidak cocok');
+            return redirect()->route('registerUmum');
         }
         $request->session()->put([
             'login' => true,
